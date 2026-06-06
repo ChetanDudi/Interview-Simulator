@@ -10,7 +10,7 @@ using Microsoft.IdentityModel.Tokens;
 
 // Load .env file for local development (safe to call even in production — won't override real env vars)
 if (File.Exists(".env"))
-    DotNetEnv.Env.Load(".env", new DotNetEnv.LoadOptions(overwriteExistingVars: false));
+    DotNetEnv.Env.Load();
 
 var builder = WebApplication.CreateBuilder(args);
 
