@@ -36,15 +36,25 @@ public static class DependencyInjection
         services.AddScoped<IPracticeService,   PracticeService>();
 
         // ── Email sender ─────────────────────────────────────────────────────
+        services.AddHttpClient("Resend", (sp, client) =>
+        {
+            var opt = sp.GetRequiredService<IOptions<EmailOptions>>().Value;
+            client.DefaultRequestHeaders.Authorization =
+                new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", opt.ResendApiKey);
+        });
+
         services.AddScoped<IEmailSender>(sp =>
         {
             var opt = sp.GetRequiredService<IOptions<EmailOptions>>().Value;
-            return opt.Provider.Equals("Smtp", StringComparison.OrdinalIgnoreCase)
-                ? (IEmailSender)sp.GetRequiredService<SmtpEmailSender>()
-                : sp.GetRequiredService<ConsoleEmailSender>();
+            if (opt.Provider.Equals("Resend", StringComparison.OrdinalIgnoreCase))
+                return sp.GetRequiredService<ResendEmailSender>();
+            if (opt.Provider.Equals("Smtp", StringComparison.OrdinalIgnoreCase))
+                return sp.GetRequiredService<SmtpEmailSender>();
+            return sp.GetRequiredService<ConsoleEmailSender>();
         });
         services.AddTransient<ConsoleEmailSender>();
         services.AddTransient<SmtpEmailSender>();
+        services.AddTransient<ResendEmailSender>();
 
         return services;
     }
