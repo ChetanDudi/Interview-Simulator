@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(Get-ChildItem -Path \"C:\\\\Users\\\\CHETAN DUDI\\\\OneDrive\\\\Desktop\\\\Project\" -Recurse -File)",
+      "Bash(Select-Object FullName)",
+      "Bash(Sort-Object FullName)",
+      "PowerShell(New-Item -ItemType Directory -Force \"c:\\\\Users\\\\CHETAN DUDI\\\\OneDrive\\\\Desktop\\\\Project\\\\src\\\\WebUI\\\\src\\\\api\")",
+      "PowerShell(New-Item -ItemType Directory -Force \"c:\\\\Users\\\\CHETAN DUDI\\\\OneDrive\\\\Desktop\\\\Project\\\\src\\\\WebUI\\\\src\\\\context\")",
+      "PowerShell(New-Item -ItemType Directory -Force \"c:\\\\Users\\\\CHETAN DUDI\\\\OneDrive\\\\Desktop\\\\Project\\\\src\\\\WebUI\\\\src\\\\pages\")",
+      "PowerShell(New-Item -ItemType Directory -Force \"c:\\\\Users\\\\CHETAN DUDI\\\\OneDrive\\\\Desktop\\\\Project\\\\src\\\\WebUI\\\\src\\\\components\")",
+      "Bash(dotnet build *)",
+      "Bash(npx vite *)",
+      "Bash(dotnet ef *)"
+    ]
+  }
+}

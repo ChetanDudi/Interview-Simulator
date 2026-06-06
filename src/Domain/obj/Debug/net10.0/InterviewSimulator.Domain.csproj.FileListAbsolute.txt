@@ -1,0 +1,11 @@
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\Domain\bin\Debug\net10.0\InterviewSimulator.Domain.deps.json
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\Domain\bin\Debug\net10.0\InterviewSimulator.Domain.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\Domain\bin\Debug\net10.0\InterviewSimulator.Domain.pdb
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\Domain\obj\Debug\net10.0\InterviewSimulator.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\Domain\obj\Debug\net10.0\InterviewSimulator.Domain.AssemblyInfoInputs.cache
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\Domain\obj\Debug\net10.0\InterviewSimulator.Domain.AssemblyInfo.cs
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\Domain\obj\Debug\net10.0\InterviewSimulator.Domain.csproj.CoreCompileInputs.cache
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\Domain\obj\Debug\net10.0\InterviewSimulator.Domain.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\Domain\obj\Debug\net10.0\refint\InterviewSimulator.Domain.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\Domain\obj\Debug\net10.0\InterviewSimulator.Domain.pdb
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\Domain\obj\Debug\net10.0\ref\InterviewSimulator.Domain.dll

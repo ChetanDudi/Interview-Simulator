@@ -1,0 +1,15 @@
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\Application\bin\Debug\net10.0\InterviewSimulator.Application.deps.json
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\Application\bin\Debug\net10.0\InterviewSimulator.Application.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\Application\bin\Debug\net10.0\InterviewSimulator.Application.pdb
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\Application\bin\Debug\net10.0\InterviewSimulator.Domain.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\Application\bin\Debug\net10.0\InterviewSimulator.Domain.pdb
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\Application\obj\Debug\net10.0\InterviewSimulator.Application.csproj.AssemblyReference.cache
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\Application\obj\Debug\net10.0\InterviewSimulator.Application.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\Application\obj\Debug\net10.0\InterviewSimulator.Application.AssemblyInfoInputs.cache
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\Application\obj\Debug\net10.0\InterviewSimulator.Application.AssemblyInfo.cs
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\Application\obj\Debug\net10.0\InterviewSimulator.Application.csproj.CoreCompileInputs.cache
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\Application\obj\Debug\net10.0\Intervie.FDCAB2DC.Up2Date
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\Application\obj\Debug\net10.0\InterviewSimulator.Application.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\Application\obj\Debug\net10.0\refint\InterviewSimulator.Application.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\Application\obj\Debug\net10.0\InterviewSimulator.Application.pdb
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\Application\obj\Debug\net10.0\ref\InterviewSimulator.Application.dll

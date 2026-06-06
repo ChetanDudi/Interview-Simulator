@@ -1,0 +1,17 @@
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\Infrastructure\bin\Debug\net10.0\InterviewSimulator.Infrastructure.deps.json
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\Infrastructure\bin\Debug\net10.0\InterviewSimulator.Infrastructure.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\Infrastructure\bin\Debug\net10.0\InterviewSimulator.Infrastructure.pdb
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\Infrastructure\bin\Debug\net10.0\InterviewSimulator.Application.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\Infrastructure\bin\Debug\net10.0\InterviewSimulator.Domain.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\Infrastructure\bin\Debug\net10.0\InterviewSimulator.Application.pdb
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\Infrastructure\bin\Debug\net10.0\InterviewSimulator.Domain.pdb
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\Infrastructure\obj\Debug\net10.0\InterviewSimulator.Infrastructure.csproj.AssemblyReference.cache
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\Infrastructure\obj\Debug\net10.0\InterviewSimulator.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\Infrastructure\obj\Debug\net10.0\InterviewSimulator.Infrastructure.AssemblyInfoInputs.cache
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\Infrastructure\obj\Debug\net10.0\InterviewSimulator.Infrastructure.AssemblyInfo.cs
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\Infrastructure\obj\Debug\net10.0\InterviewSimulator.Infrastructure.csproj.CoreCompileInputs.cache
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\Infrastructure\obj\Debug\net10.0\Intervie.7DCEDD57.Up2Date
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\Infrastructure\obj\Debug\net10.0\InterviewSimulator.Infrastructure.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\Infrastructure\obj\Debug\net10.0\refint\InterviewSimulator.Infrastructure.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\Infrastructure\obj\Debug\net10.0\InterviewSimulator.Infrastructure.pdb
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\Infrastructure\obj\Debug\net10.0\ref\InterviewSimulator.Infrastructure.dll

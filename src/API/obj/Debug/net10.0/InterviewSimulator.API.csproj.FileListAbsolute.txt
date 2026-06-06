@@ -1,0 +1,174 @@
+C:\Users\CodexSandboxOffline\.codex\.sandbox\cwd\b57677ce2895160d\src\API\bin\Debug\net10.0\appsettings.Development.json
+C:\Users\CodexSandboxOffline\.codex\.sandbox\cwd\b57677ce2895160d\src\API\bin\Debug\net10.0\appsettings.json
+C:\Users\CodexSandboxOffline\.codex\.sandbox\cwd\b57677ce2895160d\src\API\bin\Debug\net10.0\InterviewSimulator.API.staticwebassets.endpoints.json
+C:\Users\CodexSandboxOffline\.codex\.sandbox\cwd\b57677ce2895160d\src\API\bin\Debug\net10.0\InterviewSimulator.API.exe
+C:\Users\CodexSandboxOffline\.codex\.sandbox\cwd\b57677ce2895160d\src\API\bin\Debug\net10.0\InterviewSimulator.API.deps.json
+C:\Users\CodexSandboxOffline\.codex\.sandbox\cwd\b57677ce2895160d\src\API\bin\Debug\net10.0\InterviewSimulator.API.runtimeconfig.json
+C:\Users\CodexSandboxOffline\.codex\.sandbox\cwd\b57677ce2895160d\src\API\bin\Debug\net10.0\InterviewSimulator.API.dll
+C:\Users\CodexSandboxOffline\.codex\.sandbox\cwd\b57677ce2895160d\src\API\bin\Debug\net10.0\InterviewSimulator.API.pdb
+C:\Users\CodexSandboxOffline\.codex\.sandbox\cwd\b57677ce2895160d\src\API\obj\Debug\net10.0\rpswa.dswa.cache.json
+C:\Users\CodexSandboxOffline\.codex\.sandbox\cwd\b57677ce2895160d\src\API\obj\Debug\net10.0\InterviewSimulator.API.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\CodexSandboxOffline\.codex\.sandbox\cwd\b57677ce2895160d\src\API\obj\Debug\net10.0\InterviewSimulator.API.AssemblyInfoInputs.cache
+C:\Users\CodexSandboxOffline\.codex\.sandbox\cwd\b57677ce2895160d\src\API\obj\Debug\net10.0\InterviewSimulator.API.AssemblyInfo.cs
+C:\Users\CodexSandboxOffline\.codex\.sandbox\cwd\b57677ce2895160d\src\API\obj\Debug\net10.0\InterviewSimulator.API.csproj.CoreCompileInputs.cache
+C:\Users\CodexSandboxOffline\.codex\.sandbox\cwd\b57677ce2895160d\src\API\obj\Debug\net10.0\InterviewSimulator.API.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\CodexSandboxOffline\.codex\.sandbox\cwd\b57677ce2895160d\src\API\obj\Debug\net10.0\rjimswa.dswa.cache.json
+C:\Users\CodexSandboxOffline\.codex\.sandbox\cwd\b57677ce2895160d\src\API\obj\Debug\net10.0\rjsmrazor.dswa.cache.json
+C:\Users\CodexSandboxOffline\.codex\.sandbox\cwd\b57677ce2895160d\src\API\obj\Debug\net10.0\rjsmcshtml.dswa.cache.json
+C:\Users\CodexSandboxOffline\.codex\.sandbox\cwd\b57677ce2895160d\src\API\obj\Debug\net10.0\scopedcss\bundle\InterviewSimulator.API.styles.css
+C:\Users\CodexSandboxOffline\.codex\.sandbox\cwd\b57677ce2895160d\src\API\obj\Debug\net10.0\staticwebassets.build.json
+C:\Users\CodexSandboxOffline\.codex\.sandbox\cwd\b57677ce2895160d\src\API\obj\Debug\net10.0\staticwebassets.build.json.cache
+C:\Users\CodexSandboxOffline\.codex\.sandbox\cwd\b57677ce2895160d\src\API\obj\Debug\net10.0\staticwebassets.development.json
+C:\Users\CodexSandboxOffline\.codex\.sandbox\cwd\b57677ce2895160d\src\API\obj\Debug\net10.0\staticwebassets.build.endpoints.json
+C:\Users\CodexSandboxOffline\.codex\.sandbox\cwd\b57677ce2895160d\src\API\obj\Debug\net10.0\swae.build.ex.cache
+C:\Users\CodexSandboxOffline\.codex\.sandbox\cwd\b57677ce2895160d\src\API\obj\Debug\net10.0\InterviewSimulator.API.dll
+C:\Users\CodexSandboxOffline\.codex\.sandbox\cwd\b57677ce2895160d\src\API\obj\Debug\net10.0\refint\InterviewSimulator.API.dll
+C:\Users\CodexSandboxOffline\.codex\.sandbox\cwd\b57677ce2895160d\src\API\obj\Debug\net10.0\InterviewSimulator.API.pdb
+C:\Users\CodexSandboxOffline\.codex\.sandbox\cwd\b57677ce2895160d\src\API\obj\Debug\net10.0\InterviewSimulator.API.genruntimeconfig.cache
+C:\Users\CodexSandboxOffline\.codex\.sandbox\cwd\b57677ce2895160d\src\API\obj\Debug\net10.0\ref\InterviewSimulator.API.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\obj\Debug\net10.0\InterviewSimulator.API.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\obj\Debug\net10.0\refint\InterviewSimulator.API.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\obj\Debug\net10.0\InterviewSimulator.API.pdb
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\InterviewSimulator.API.staticwebassets.endpoints.json
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\appsettings.Development.json
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\appsettings.json
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\InterviewSimulator.API.exe
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\InterviewSimulator.API.deps.json
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\InterviewSimulator.API.runtimeconfig.json
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\InterviewSimulator.API.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\InterviewSimulator.API.pdb
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\Microsoft.EntityFrameworkCore.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\Microsoft.EntityFrameworkCore.Relational.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\Microsoft.IdentityModel.Abstractions.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\Microsoft.IdentityModel.Logging.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\Microsoft.IdentityModel.Protocols.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\Microsoft.IdentityModel.Tokens.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\Npgsql.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\Npgsql.EntityFrameworkCore.PostgreSQL.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\InterviewSimulator.Application.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\InterviewSimulator.Domain.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\InterviewSimulator.Infrastructure.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\InterviewSimulator.Persistence.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\InterviewSimulator.Application.pdb
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\InterviewSimulator.Infrastructure.pdb
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\InterviewSimulator.Persistence.pdb
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\InterviewSimulator.Domain.pdb
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\obj\Debug\net10.0\InterviewSimulator.API.csproj.AssemblyReference.cache
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\obj\Debug\net10.0\rpswa.dswa.cache.json
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\obj\Debug\net10.0\InterviewSimulator.API.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\obj\Debug\net10.0\InterviewSimulator.API.AssemblyInfoInputs.cache
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\obj\Debug\net10.0\InterviewSimulator.API.AssemblyInfo.cs
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\obj\Debug\net10.0\InterviewSimulator.API.csproj.CoreCompileInputs.cache
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\obj\Debug\net10.0\InterviewSimulator.API.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\obj\Debug\net10.0\rjimswa.dswa.cache.json
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\obj\Debug\net10.0\rjsmrazor.dswa.cache.json
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\obj\Debug\net10.0\rjsmcshtml.dswa.cache.json
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\obj\Debug\net10.0\scopedcss\bundle\InterviewSimulator.API.styles.css
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\obj\Debug\net10.0\staticwebassets.build.json
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\obj\Debug\net10.0\staticwebassets.build.json.cache
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\obj\Debug\net10.0\staticwebassets.development.json
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\obj\Debug\net10.0\staticwebassets.build.endpoints.json
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\obj\Debug\net10.0\swae.build.ex.cache
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\obj\Debug\net10.0\Intervie.D137EFA4.Up2Date
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\obj\Debug\net10.0\InterviewSimulator.API.genruntimeconfig.cache
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\obj\Debug\net10.0\ref\InterviewSimulator.API.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\Humanizer.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\Microsoft.Build.Framework.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\Microsoft.CodeAnalysis.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\Microsoft.CodeAnalysis.CSharp.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\Microsoft.CodeAnalysis.CSharp.Workspaces.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\Microsoft.CodeAnalysis.Workspaces.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\Microsoft.CodeAnalysis.ExternalAccess.RazorCompiler.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\Microsoft.CodeAnalysis.Workspaces.MSBuild.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\Microsoft.EntityFrameworkCore.Design.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\Microsoft.Extensions.DependencyModel.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\Microsoft.VisualStudio.SolutionPersistence.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\Mono.TextTemplating.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\Newtonsoft.Json.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\System.CodeDom.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\System.Composition.AttributedModel.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\System.Composition.Convention.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\System.Composition.Hosting.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\System.Composition.Runtime.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\System.Composition.TypedParts.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\cs\Microsoft.CodeAnalysis.resources.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\de\Microsoft.CodeAnalysis.resources.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\es\Microsoft.CodeAnalysis.resources.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\fr\Microsoft.CodeAnalysis.resources.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\it\Microsoft.CodeAnalysis.resources.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\ja\Microsoft.CodeAnalysis.resources.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\ko\Microsoft.CodeAnalysis.resources.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\pl\Microsoft.CodeAnalysis.resources.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\pt-BR\Microsoft.CodeAnalysis.resources.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\ru\Microsoft.CodeAnalysis.resources.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\tr\Microsoft.CodeAnalysis.resources.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\zh-Hans\Microsoft.CodeAnalysis.resources.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\zh-Hant\Microsoft.CodeAnalysis.resources.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\cs\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\de\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\es\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\fr\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\it\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\ja\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\ko\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\pl\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\pt-BR\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\ru\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\tr\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\zh-Hans\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\zh-Hant\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\cs\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\de\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\es\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\fr\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\it\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\ja\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\ko\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\pl\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\pt-BR\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\ru\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\tr\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\zh-Hans\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\zh-Hant\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\cs\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\de\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\es\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\fr\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\it\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\ja\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\ko\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\pl\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\pt-BR\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\ru\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\tr\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\cs\Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\de\Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\es\Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\fr\Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\it\Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\ja\Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\ko\Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\pl\Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\pt-BR\Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\ru\Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\tr\Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\OpenAI.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\System.ClientModel.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\System.Memory.Data.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\UglyToad.PdfPig.Core.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\UglyToad.PdfPig.DocumentLayoutAnalysis.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\UglyToad.PdfPig.Fonts.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\UglyToad.PdfPig.Package.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\UglyToad.PdfPig.Tokenization.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\UglyToad.PdfPig.Tokens.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\UglyToad.PdfPig.dll

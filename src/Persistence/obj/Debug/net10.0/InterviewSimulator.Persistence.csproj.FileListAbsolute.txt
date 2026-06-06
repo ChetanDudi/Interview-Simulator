@@ -1,0 +1,17 @@
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\Persistence\obj\Debug\net10.0\InterviewSimulator.Persistence.csproj.AssemblyReference.cache
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\Persistence\obj\Debug\net10.0\InterviewSimulator.Persistence.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\Persistence\obj\Debug\net10.0\InterviewSimulator.Persistence.AssemblyInfoInputs.cache
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\Persistence\obj\Debug\net10.0\InterviewSimulator.Persistence.AssemblyInfo.cs
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\Persistence\obj\Debug\net10.0\InterviewSimulator.Persistence.csproj.CoreCompileInputs.cache
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\Persistence\obj\Debug\net10.0\InterviewSimulator.Persistence.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\Persistence\obj\Debug\net10.0\refint\InterviewSimulator.Persistence.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\Persistence\obj\Debug\net10.0\InterviewSimulator.Persistence.pdb
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\Persistence\bin\Debug\net10.0\InterviewSimulator.Persistence.deps.json
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\Persistence\bin\Debug\net10.0\InterviewSimulator.Persistence.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\Persistence\bin\Debug\net10.0\InterviewSimulator.Persistence.pdb
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\Persistence\bin\Debug\net10.0\InterviewSimulator.Application.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\Persistence\bin\Debug\net10.0\InterviewSimulator.Domain.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\Persistence\bin\Debug\net10.0\InterviewSimulator.Application.pdb
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\Persistence\bin\Debug\net10.0\InterviewSimulator.Domain.pdb
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\Persistence\obj\Debug\net10.0\Intervie.3AE44A6C.Up2Date
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\Persistence\obj\Debug\net10.0\ref\InterviewSimulator.Persistence.dll
