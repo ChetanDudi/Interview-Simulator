@@ -5,10 +5,21 @@ import { useAuth } from '../context/AuthContext'
 import { getSession, submitAnswers } from '../api/sessions'
 import type { QuestionResponse } from '../api/types'
 
+interface ISpeechRecognition extends EventTarget {
+  continuous: boolean
+  interimResults: boolean
+  lang: string
+  start(): void
+  stop(): void
+  onresult: ((event: SpeechRecognitionEvent) => void) | null
+  onerror: ((event: Event) => void) | null
+  onend: (() => void) | null
+}
+
 declare global {
   interface Window {
-    SpeechRecognition: typeof SpeechRecognition
-    webkitSpeechRecognition: typeof SpeechRecognition
+    SpeechRecognition: new () => ISpeechRecognition
+    webkitSpeechRecognition: new () => ISpeechRecognition
   }
 }
 
@@ -59,7 +70,7 @@ export default function InterviewPage() {
   const [interimText,    setInterimText]   = useState('')
   const [voiceSupported, setVoiceSupported] = useState(false)
 
-  const recognitionRef  = useRef<SpeechRecognition | null>(null)
+  const recognitionRef  = useRef<ISpeechRecognition | null>(null)
   const baseAnswerRef   = useRef('')
   const sessionFinalRef = useRef('')
   const currentIdRef    = useRef('')
