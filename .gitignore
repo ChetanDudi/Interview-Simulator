@@ -1,0 +1,19 @@
+# Build outputs
+bin/
+obj/
+**/bin/
+**/obj/
+
+# IDE / editor
+.vs/
+.vscode/
+
+# Node
+node_modules/
+
+# Secrets — never commit these
+.env
+secrets.json
+
+# .NET user-secrets are stored outside the project folder by design, but just in case
+**/secrets.json
