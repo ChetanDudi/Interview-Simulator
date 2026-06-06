@@ -1,4 +1,5 @@
 using InterviewSimulator.Application.Abstractions.Auth;
+using InterviewSimulator.Application.Abstractions.Practice;
 using InterviewSimulator.Application.Abstractions.Resumes;
 using InterviewSimulator.Application.Abstractions.Sessions;
 using InterviewSimulator.Persistence.Db;
@@ -28,9 +29,10 @@ public static class DependencyInjection
             .AddRoles<AppRole>()
             .AddEntityFrameworkStores<InterviewSimulatorDbContext>();
 
-        services.AddScoped<IAuthService,    AuthService>();
-        services.AddScoped<IResumeService,  ResumeService>();
-        services.AddScoped<ISessionService, SessionService>();
+        services.AddScoped<IAuthService,            AuthService>();
+        services.AddScoped<IResumeService,          ResumeService>();
+        services.AddScoped<ISessionService,         SessionService>();
+        services.AddScoped<IPracticeSessionService, PracticeSessionService>();
 
         return services;
     }

@@ -10,5 +10,6 @@ public sealed class ReportResponse
     public string                                Summary            { get; init; } = string.Empty;
     public DateTime                              GeneratedAtUtc     { get; init; }
     public int?                                  TimeTakenSeconds   { get; init; }
+    public string?                               ShareToken         { get; init; }
     public IReadOnlyList<QuestionFeedbackResponse> QuestionFeedbacks { get; init; } = [];
 }

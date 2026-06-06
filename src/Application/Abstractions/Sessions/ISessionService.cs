@@ -10,4 +10,6 @@ public interface ISessionService
     Task<IReadOnlyCollection<SessionResponse>> GetByUserAsync(Guid userId, CancellationToken cancellationToken = default);
     Task<ServiceResult>                   SubmitAnswersAsync(Guid userId, Guid sessionId, IReadOnlyList<AnswerRequest> answers, int timeTakenSeconds, CancellationToken cancellationToken = default);
     Task<ReportResponse?>                 GetReportAsync(Guid userId, Guid sessionId, CancellationToken cancellationToken = default);
+    Task<string>                          GenerateShareTokenAsync(Guid userId, Guid sessionId, CancellationToken cancellationToken = default);
+    Task<ReportResponse?>                 GetReportByShareTokenAsync(string token, CancellationToken cancellationToken = default);
 }

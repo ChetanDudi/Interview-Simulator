@@ -54,3 +54,16 @@ export async function getReport(sessionId: string, token: string): Promise<Repor
   })
   return handleResponse<ReportResponse>(res)
 }
+
+export async function shareSession(sessionId: string, token: string): Promise<{ token: string; shareUrl: string }> {
+  const res = await fetch(`${BASE}/${sessionId}/share`, {
+    method: 'POST',
+    headers: { Authorization: `Bearer ${token}` },
+  })
+  return handleResponse<{ token: string; shareUrl: string }>(res)
+}
+
+export async function getSharedInterview(shareToken: string): Promise<ReportResponse> {
+  const res = await fetch(`/api/public/interview/${shareToken}`)
+  return handleResponse<ReportResponse>(res)
+}

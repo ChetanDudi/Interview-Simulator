@@ -87,5 +87,22 @@ export interface ReportResponse {
   summary: string
   generatedAtUtc: string
   timeTakenSeconds?: number
+  shareToken?: string
   questionFeedbacks: QuestionFeedbackResponse[]
+}
+
+export interface PracticeSessionResponse {
+  id: string
+  topic: string
+  createdAtUtc: string
+  shareToken?: string
+  questions: PracticeQuestion[]
+}
+
+export interface PracticeQuestion {
+  questionText: string
+  answer: string
+  questionType: 'MCQ' | 'ShortAnswer' | 'LongAnswer' | 'Coding' | 'Other'
+  options: string[]
+  correctOptionIndex?: number
 }

@@ -1,5 +1,6 @@
 using InterviewSimulator.Persistence.Identity;
 using InterviewSimulator.Persistence.OtpVerification;
+using InterviewSimulator.Persistence.Practice;
 using InterviewSimulator.Persistence.Resumes;
 using InterviewSimulator.Persistence.Sessions;
 using Microsoft.AspNetCore.Identity;
@@ -22,13 +23,15 @@ public sealed class InterviewSimulatorDbContext
     public InterviewSimulatorDbContext(DbContextOptions<InterviewSimulatorDbContext> options)
         : base(options) { }
 
-    public DbSet<AppResume>            Resumes          { get; set; }
-    public DbSet<EmailOtp>             EmailOtps        { get; set; }
-    public DbSet<AppInterviewSession>  Sessions         { get; set; }
-    public DbSet<AppInterviewQuestion> Questions        { get; set; }
-    public DbSet<AppInterviewAnswer>   Answers          { get; set; }
-    public DbSet<AppFeedbackReport>    FeedbackReports  { get; set; }
+    public DbSet<AppResume>            Resumes           { get; set; }
+    public DbSet<EmailOtp>             EmailOtps         { get; set; }
+    public DbSet<AppInterviewSession>  Sessions          { get; set; }
+    public DbSet<AppInterviewQuestion> Questions         { get; set; }
+    public DbSet<AppInterviewAnswer>   Answers           { get; set; }
+    public DbSet<AppFeedbackReport>    FeedbackReports   { get; set; }
     public DbSet<AppQuestionFeedback>  QuestionFeedbacks { get; set; }
+    public DbSet<AppPracticeSession>   PracticeSessions  { get; set; }
+    public DbSet<AppPracticeQuestion>  PracticeQuestions { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -118,6 +121,27 @@ public sealed class InterviewSimulatorDbContext
             e.Property(f => f.Feedback).HasColumnType("text").IsRequired();
             e.Property(f => f.Suggestion).HasColumnType("text").IsRequired();
             e.Property(f => f.IdealAnswer).HasColumnType("text").IsRequired();
+        });
+
+        builder.Entity<AppPracticeSession>(e =>
+        {
+            e.ToTable("PracticeSessions");
+            e.HasKey(s => s.Id);
+            e.Property(s => s.Topic).HasMaxLength(500).IsRequired();
+            e.Property(s => s.ShareToken).HasMaxLength(64);
+            e.HasIndex(s => s.ShareToken).IsUnique();
+            e.HasOne<AppUser>().WithMany().HasForeignKey(s => s.UserId).OnDelete(DeleteBehavior.Cascade);
+            e.HasMany(s => s.Questions).WithOne(q => q.Session).HasForeignKey(q => q.SessionId).OnDelete(DeleteBehavior.Cascade);
+        });
+
+        builder.Entity<AppPracticeQuestion>(e =>
+        {
+            e.ToTable("PracticeQuestions");
+            e.HasKey(q => q.Id);
+            e.Property(q => q.QuestionText).HasColumnType("text").IsRequired();
+            e.Property(q => q.QuestionType).HasMaxLength(50).IsRequired();
+            e.Property(q => q.OptionsJson).HasColumnType("text");
+            e.Property(q => q.Answer).HasColumnType("text").IsRequired();
         });
     }
 }

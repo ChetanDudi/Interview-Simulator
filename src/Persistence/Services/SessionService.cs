@@ -214,18 +214,58 @@ public sealed class SessionService(
             .Where(a => a.SessionId == sessionId)
             .ToDictionaryAsync(a => a.QuestionId, a => a.AnswerText, cancellationToken);
 
-        var report = session.FeedbackReport;
+        return BuildReportResponse(session, answers);
+    }
 
+    // ── Share Token ───────────────────────────────────────────────────────────
+
+    public async Task<string> GenerateShareTokenAsync(Guid userId, Guid sessionId, CancellationToken cancellationToken = default)
+    {
+        var session = await dbContext.Sessions
+            .FirstOrDefaultAsync(s => s.Id == sessionId && s.UserId == userId, cancellationToken)
+            ?? throw new InvalidOperationException("Session not found.");
+
+        if (!string.IsNullOrEmpty(session.ShareToken))
+            return session.ShareToken;
+
+        session.ShareToken = Guid.NewGuid().ToString("N");
+        await dbContext.SaveChangesAsync(cancellationToken);
+        return session.ShareToken;
+    }
+
+    public async Task<ReportResponse?> GetReportByShareTokenAsync(string token, CancellationToken cancellationToken = default)
+    {
+        var session = await dbContext.Sessions
+            .Include(s => s.Questions)
+            .Include(s => s.FeedbackReport)
+                .ThenInclude(r => r!.QuestionFeedbacks)
+            .FirstOrDefaultAsync(s => s.ShareToken == token, cancellationToken);
+
+        if (session?.FeedbackReport is null) return null;
+
+        var answers = await dbContext.Answers
+            .Where(a => a.SessionId == session.Id)
+            .ToDictionaryAsync(a => a.QuestionId, a => a.AnswerText, cancellationToken);
+
+        return BuildReportResponse(session, answers);
+    }
+
+    // ── Private Helpers ───────────────────────────────────────────────────────
+
+    private static ReportResponse BuildReportResponse(AppInterviewSession session, Dictionary<Guid, string> answers)
+    {
+        var report = session.FeedbackReport!;
         return new ReportResponse
         {
             Id                 = report.Id,
-            SessionId          = sessionId,
+            SessionId          = session.Id,
             OverallScore       = report.OverallScore,
             TechnicalScore     = report.TechnicalScore,
             CommunicationScore = report.CommunicationScore,
             Summary            = report.Summary,
             GeneratedAtUtc     = report.GeneratedAtUtc,
             TimeTakenSeconds   = session.TimeTakenSeconds,
+            ShareToken         = session.ShareToken,
             QuestionFeedbacks  = report.QuestionFeedbacks.Select(f =>
             {
                 var q = session.Questions.FirstOrDefault(q => q.Id == f.QuestionId);
@@ -245,8 +285,6 @@ public sealed class SessionService(
             }).ToArray()
         };
     }
-
-    // ── Private Helpers ───────────────────────────────────────────────────────
 
     private static SessionResponse MapSession(AppInterviewSession s, string resumeFileName) => new()
     {

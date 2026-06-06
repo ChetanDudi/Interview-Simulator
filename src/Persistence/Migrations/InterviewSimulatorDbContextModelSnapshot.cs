@@ -178,6 +178,75 @@ namespace InterviewSimulator.Persistence.Migrations
                     b.ToTable("EmailOtps", (string)null);
                 });
 
+            modelBuilder.Entity("InterviewSimulator.Persistence.Practice.AppPracticeQuestion", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Answer")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int?>("CorrectOptionIndex")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("OptionsJson")
+                        .HasColumnType("text");
+
+                    b.Property<int>("OrderIndex")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("QuestionText")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("QuestionType")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<Guid>("SessionId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SessionId");
+
+                    b.ToTable("PracticeQuestions", (string)null);
+                });
+
+            modelBuilder.Entity("InterviewSimulator.Persistence.Practice.AppPracticeSession", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAtUtc")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("ShareToken")
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)");
+
+                    b.Property<string>("Topic")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ShareToken")
+                        .IsUnique();
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("PracticeSessions", (string)null);
+                });
+
             modelBuilder.Entity("InterviewSimulator.Persistence.Resumes.AppResume", b =>
                 {
                     b.Property<Guid>("Id")
@@ -337,6 +406,9 @@ namespace InterviewSimulator.Persistence.Migrations
                     b.Property<Guid>("ResumeId")
                         .HasColumnType("uuid");
 
+                    b.Property<string>("ShareToken")
+                        .HasColumnType("text");
+
                     b.Property<string>("Status")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -494,6 +566,26 @@ namespace InterviewSimulator.Persistence.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("InterviewSimulator.Persistence.Practice.AppPracticeQuestion", b =>
+                {
+                    b.HasOne("InterviewSimulator.Persistence.Practice.AppPracticeSession", "Session")
+                        .WithMany("Questions")
+                        .HasForeignKey("SessionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Session");
+                });
+
+            modelBuilder.Entity("InterviewSimulator.Persistence.Practice.AppPracticeSession", b =>
+                {
+                    b.HasOne("InterviewSimulator.Persistence.Identity.AppUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("InterviewSimulator.Persistence.Resumes.AppResume", b =>
                 {
                     b.HasOne("InterviewSimulator.Persistence.Identity.AppUser", null)
@@ -588,6 +680,11 @@ namespace InterviewSimulator.Persistence.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("InterviewSimulator.Persistence.Practice.AppPracticeSession", b =>
+                {
+                    b.Navigation("Questions");
                 });
 
             modelBuilder.Entity("InterviewSimulator.Persistence.Sessions.AppFeedbackReport", b =>

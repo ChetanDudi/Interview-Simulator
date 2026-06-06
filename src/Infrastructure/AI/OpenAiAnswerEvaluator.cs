@@ -38,7 +38,7 @@ public sealed class AnswerEvaluator(ILLMService llm) : IAnswerEvaluator
             """;
 
         var raw  = await llm.CompleteAsync(prompt, cancellationToken);
-        var json = StripMarkdown(raw);
+        var json = JsonSanitizer.ExtractJson(raw, expectArray: false);
 
         var dto = JsonSerializer.Deserialize<EvalDto>(json, JsonOpts)
             ?? throw new InvalidOperationException("Failed to parse evaluation from AI response.");
@@ -60,14 +60,6 @@ public sealed class AnswerEvaluator(ILLMService llm) : IAnswerEvaluator
                 })
                 .ToArray()
         };
-    }
-
-    private static string StripMarkdown(string raw)
-    {
-        var text = raw.Trim();
-        if (!text.StartsWith("```")) return text;
-        var lines = text.Split('\n');
-        return string.Join('\n', lines.Skip(1).TakeWhile(l => !l.TrimStart().StartsWith("```"))).Trim();
     }
 
     private sealed class EvalDto

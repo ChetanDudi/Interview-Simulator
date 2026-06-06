@@ -11,9 +11,12 @@ import ResumePage         from './pages/ResumePage'
 import InterviewPage      from './pages/InterviewPage'
 import VoiceInterviewPage from './pages/VoiceInterviewPage'
 import ReportPage         from './pages/ReportPage'
-import SessionsPage       from './pages/SessionsPage'
-import PracticePage       from './pages/PracticePage'
-import ProtectedRoute     from './components/ProtectedRoute'
+import SessionsPage        from './pages/SessionsPage'
+import PracticePage        from './pages/PracticePage'
+import PracticeViewPage    from './pages/PracticeViewPage'
+import SharedPracticePage  from './pages/SharedPracticePage'
+import SharedInterviewPage from './pages/SharedInterviewPage'
+import ProtectedRoute      from './components/ProtectedRoute'
 
 function RootRedirect() {
   const { user, isLoading } = useAuth()
@@ -37,9 +40,12 @@ export default function App() {
         <Route path="/interview/:id"       element={<ProtectedRoute><InterviewPage /></ProtectedRoute>} />
         <Route path="/voice-interview/:id" element={<ProtectedRoute><VoiceInterviewPage /></ProtectedRoute>} />
         <Route path="/report/:id"       element={<ProtectedRoute><ReportPage /></ProtectedRoute>} />
-        <Route path="/sessions"         element={<ProtectedRoute><SessionsPage /></ProtectedRoute>} />
-        <Route path="/practice"         element={<ProtectedRoute><PracticePage /></ProtectedRoute>} />
-        <Route path="*"                 element={<Navigate to="/" replace />} />
+        <Route path="/sessions"                    element={<ProtectedRoute><SessionsPage /></ProtectedRoute>} />
+        <Route path="/practice"                    element={<ProtectedRoute><PracticePage /></ProtectedRoute>} />
+        <Route path="/practice/:id"                element={<ProtectedRoute><PracticeViewPage /></ProtectedRoute>} />
+        <Route path="/shared/practice/:token"      element={<SharedPracticePage />} />
+        <Route path="/shared/interview/:token"     element={<SharedInterviewPage />} />
+        <Route path="*"                            element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>
   )

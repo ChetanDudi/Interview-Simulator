@@ -59,6 +59,23 @@ public sealed class SessionsController(ISessionService sessionService) : Control
         return Ok(new { sessionId = id });
     }
 
+    [HttpPost("{id:guid}/share")]
+    public async Task<IActionResult> Share(Guid id, CancellationToken cancellationToken)
+    {
+        var userId = GetUserId();
+        if (userId is null) return Unauthorized();
+
+        try
+        {
+            var token = await sessionService.GenerateShareTokenAsync(userId.Value, id, cancellationToken);
+            return Ok(new { token, shareUrl = $"/shared/interview/{token}" });
+        }
+        catch (InvalidOperationException)
+        {
+            return NotFound();
+        }
+    }
+
     [HttpGet("{id:guid}/report")]
     public async Task<IActionResult> GetReport(Guid id, CancellationToken cancellationToken)
     {

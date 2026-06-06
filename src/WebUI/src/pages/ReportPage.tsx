@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import NavBar from '../components/NavBar'
 import { useAuth } from '../context/AuthContext'
-import { getReport } from '../api/sessions'
+import { getReport, shareSession } from '../api/sessions'
 import type { ReportResponse, QuestionFeedbackResponse } from '../api/types'
 
 function ScoreRing({ score, label, color }: { score: number; label: string; color: string }) {
@@ -96,16 +96,34 @@ export default function ReportPage() {
   const { id }    = useParams<{ id: string }>()
   const { token } = useAuth()
 
-  const [report,  setReport]  = useState<ReportResponse | null>(null)
-  const [loading, setLoading] = useState(true)
-  const [error,   setError]   = useState('')
+  const [report,     setReport]     = useState<ReportResponse | null>(null)
+  const [loading,    setLoading]    = useState(true)
+  const [error,      setError]      = useState('')
+  const [shareToken, setShareToken] = useState<string | undefined>()
+  const [copied,     setCopied]     = useState(false)
 
   useEffect(() => {
     if (!id || !token) return
     getReport(id, token)
-      .then(r => { setReport(r); setLoading(false) })
+      .then(r => { setReport(r); setShareToken(r.shareToken); setLoading(false) })
       .catch(() => { setError('Failed to load report.'); setLoading(false) })
   }, [id, token])
+
+  async function handleShare() {
+    if (!id || !token) return
+    try {
+      let t = shareToken
+      if (!t) {
+        const res = await shareSession(id, token)
+        t = res.token
+        setShareToken(t)
+      }
+      const url = `${window.location.origin}/shared/interview/${t}`
+      await navigator.clipboard.writeText(url)
+      setCopied(true)
+      setTimeout(() => setCopied(false), 2500)
+    } catch { /* ignore */ }
+  }
 
   if (loading) return <><NavBar /><div className="loading-screen"><span className="spinner" /></div></>
   if (error || !report) return (
@@ -183,8 +201,11 @@ export default function ReportPage() {
           ))}
         </div>
 
-        <div style={{ textAlign: 'center', marginTop: 32 }}>
+        <div style={{ display: 'flex', gap: 12, justifyContent: 'center', marginTop: 32 }}>
           <Link to="/resumes" className="btn btn-outline">← Start Another Interview</Link>
+          <button className="btn btn-share" onClick={handleShare}>
+            {copied ? '✓ Link Copied!' : '🔗 Share Report'}
+          </button>
         </div>
 
       </main>
