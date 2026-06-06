@@ -6,8 +6,8 @@ const BASE = `${apiBase}/api/practice`
 
 async function handleResponse<T>(res: Response): Promise<T> {
   if (!res.ok) {
-    const body = await res.json().catch(() => ({ errors: ['Unexpected server error'] })) as { errors?: string[] }
-    throw new Error(body.errors?.join(', ') ?? `Request failed (${res.status})`)
+    const body = await res.json().catch(() => null) as { errors?: string[] } | null
+    throw new Error(body?.errors?.join(', ') ?? `Request failed (${res.status})`)
   }
   return res.json() as Promise<T>
 }

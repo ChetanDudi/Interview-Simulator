@@ -74,12 +74,30 @@ export default function SharedInterviewPage() {
 
   useEffect(() => {
     if (!token) return
-    getSharedInterview(token)
-      .then(r => { setReport(r); setLoading(false) })
-      .catch(() => { setError('This interview report is not available or the link has expired.'); setLoading(false) })
+    const attempt = (retries: number) => {
+      getSharedInterview(token)
+        .then(r => { setReport(r); setLoading(false) })
+        .catch((err: unknown) => {
+          const msg = err instanceof Error ? err.message : String(err)
+          if (retries > 0 && msg.includes('fetch')) {
+            setTimeout(() => attempt(retries - 1), 3000)
+          } else {
+            setError(msg.includes('404') || msg.includes('not found')
+              ? 'This interview report does not exist or the link is invalid.'
+              : 'Could not load the report. The server may be starting up — please try refreshing.')
+            setLoading(false)
+          }
+        })
+    }
+    attempt(3)
   }, [token])
 
-  if (loading) return <div className="loading-screen"><span className="spinner" /></div>
+  if (loading) return (
+    <div className="loading-screen">
+      <span className="spinner" />
+      <p style={{ color: '#94a3b8', marginTop: 16, fontSize: 14 }}>Loading… (server may be waking up)</p>
+    </div>
+  )
 
   if (error || !report) return (
     <div className="shared-page">

@@ -1,11 +1,13 @@
 using InterviewSimulator.Application.Abstractions.Practice;
 using InterviewSimulator.Application.Abstractions.Sessions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InterviewSimulator.API.Controllers;
 
 [ApiController]
 [Route("api/public")]
+[AllowAnonymous]
 public sealed class PublicController(
     ISessionService sessionService,
     IPracticeSessionService practiceSessionService) : ControllerBase
