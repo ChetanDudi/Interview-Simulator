@@ -69,10 +69,18 @@ app.Run();
 
 static string GetRequiredConnectionString(IConfiguration configuration)
 {
-    var connectionString = configuration.GetConnectionString("DefaultConnection");
+    var active = configuration["ActiveDatabase"] ?? "Local";
 
-    if (string.IsNullOrWhiteSpace(connectionString))
-        throw new InvalidOperationException("Connection string 'DefaultConnection' is not configured.");
+    var key = active.Equals("Neon", StringComparison.OrdinalIgnoreCase)
+        ? "NeonConnection"
+        : "DefaultConnection";
+
+    var connectionString = configuration.GetConnectionString(key);
+
+    if (string.IsNullOrWhiteSpace(connectionString) || connectionString.Contains("__SET_IN"))
+        throw new InvalidOperationException(
+            $"Connection string '{key}' is not configured. " +
+            $"Run: dotnet user-secrets set \"ConnectionStrings:{key}\" \"<your-connection-string>\"");
 
     return connectionString;
 }

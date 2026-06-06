@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("InterviewSimulator.Application")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7427997d85903c711d3e9bac0cc3317b15af7898")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2f63e98cca374c87b46893fcda8cd3d33ce95801")]
 [assembly: System.Reflection.AssemblyProductAttribute("InterviewSimulator.Application")]
 [assembly: System.Reflection.AssemblyTitleAttribute("InterviewSimulator.Application")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
