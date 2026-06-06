@@ -7,6 +7,7 @@ using InterviewSimulator.Persistence.Identity;
 using InterviewSimulator.Persistence.OtpVerification;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace InterviewSimulator.Persistence.Services;
 
@@ -15,7 +16,8 @@ public sealed class AuthService(
     RoleManager<AppRole>            roleManager,
     IJwtTokenGenerator              jwtTokenGenerator,
     IEmailSender                    emailSender,
-    InterviewSimulatorDbContext     dbContext) : IAuthService
+    InterviewSimulatorDbContext     dbContext,
+    ILogger<AuthService>            logger) : IAuthService
 {
     private const string DefaultRoleName       = "Candidate";
     private const int    OtpExpiryMinutes      = 10;
@@ -252,7 +254,14 @@ public sealed class AuthService(
             : ("Verify your Interview Simulator email",
                $"Your verification code is:\n\n    {code}\n\nThis code expires in {OtpExpiryMinutes} minutes.");
 
-        await emailSender.SendAsync(email, subject, body, ct);
+        try
+        {
+            await emailSender.SendAsync(email, subject, body, ct);
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "Failed to send OTP email to {Email} for purpose {Purpose}", email, purpose);
+        }
     }
 
     private async Task<(bool Valid, string Error)> VerifyOtpCodeAsync(string email, string purpose, string code, CancellationToken ct)

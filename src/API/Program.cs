@@ -69,6 +69,22 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
     app.UseHttpsRedirection();
 
+app.UseExceptionHandler(exApp =>
+{
+    exApp.Run(async context =>
+    {
+        context.Response.StatusCode  = 500;
+        context.Response.ContentType = "application/json";
+
+        // Preserve CORS headers so the browser doesn't show a misleading CORS error
+        var origin = context.Request.Headers.Origin.FirstOrDefault();
+        if (origin is not null)
+            context.Response.Headers.Append("Access-Control-Allow-Origin", origin);
+
+        await context.Response.WriteAsync("{\"errors\":[\"An unexpected server error occurred.\"]}");
+    });
+});
+
 app.UseCors("WebUiPolicy");
 app.UseAuthentication();
 app.UseAuthorization();
