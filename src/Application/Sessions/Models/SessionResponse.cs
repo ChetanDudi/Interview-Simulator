@@ -7,6 +7,7 @@ public sealed class SessionResponse
     public string                         ResumeFileName { get; init; } = string.Empty;
     public string                         Status         { get; init; } = string.Empty;
     public DateTime                       CreatedAtUtc   { get; init; }
-    public int?                           OverallScore   { get; init; }
-    public IReadOnlyList<QuestionResponse> Questions     { get; init; } = [];
+    public int?                           OverallScore     { get; init; }
+    public int?                           TimeTakenSeconds { get; init; }
+    public IReadOnlyList<QuestionResponse> Questions       { get; init; } = [];
 }

@@ -47,12 +47,12 @@ public sealed class SessionsController(ISessionService sessionService) : Control
     }
 
     [HttpPost("{id:guid}/submit")]
-    public async Task<IActionResult> Submit(Guid id, [FromBody] List<AnswerRequest> answers, CancellationToken cancellationToken)
+    public async Task<IActionResult> Submit(Guid id, [FromBody] SubmitAnswersRequest body, CancellationToken cancellationToken)
     {
         var userId = GetUserId();
         if (userId is null) return Unauthorized();
 
-        var result = await sessionService.SubmitAnswersAsync(userId.Value, id, answers, cancellationToken);
+        var result = await sessionService.SubmitAnswersAsync(userId.Value, id, body.Answers, body.TimeTakenSeconds, cancellationToken);
         if (!result.Succeeded)
             return BadRequest(new { errors = result.Errors });
 
@@ -82,4 +82,10 @@ public sealed class CreateSessionRequest
 {
     public Guid ResumeId      { get; init; }
     public int  QuestionCount { get; init; } = 8;
+}
+
+public sealed class SubmitAnswersRequest
+{
+    public List<AnswerRequest> Answers          { get; init; } = [];
+    public int                 TimeTakenSeconds { get; init; }
 }

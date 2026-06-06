@@ -15,3 +15,4 @@ C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\Persistence\bin\Debug\net10.0\
 C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\Persistence\bin\Debug\net10.0\InterviewSimulator.Domain.pdb
 C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\Persistence\obj\Debug\net10.0\Intervie.3AE44A6C.Up2Date
 C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\Persistence\obj\Debug\net10.0\ref\InterviewSimulator.Persistence.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\Persistence\obj\Debug\net10.0\InterviewSimulator.Persistence.sourcelink.json

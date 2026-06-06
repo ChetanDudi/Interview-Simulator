@@ -289,10 +289,16 @@ namespace InterviewSimulator.Persistence.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
 
+                    b.Property<int?>("CorrectOptionIndex")
+                        .HasColumnType("integer");
+
                     b.Property<string>("Difficulty")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
+
+                    b.Property<string>("OptionsJson")
+                        .HasColumnType("text");
 
                     b.Property<int>("OrderIndex")
                         .HasColumnType("integer");
@@ -300,6 +306,11 @@ namespace InterviewSimulator.Persistence.Migrations
                     b.Property<string>("QuestionText")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<string>("QuestionType")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
 
                     b.Property<Guid>("SessionId")
                         .HasColumnType("uuid");
@@ -331,6 +342,9 @@ namespace InterviewSimulator.Persistence.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
+                    b.Property<int?>("TimeTakenSeconds")
+                        .HasColumnType("integer");
+
                     b.Property<Guid>("UserId")
                         .HasColumnType("uuid");
 
@@ -350,6 +364,10 @@ namespace InterviewSimulator.Persistence.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<string>("Feedback")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("IdealAnswer")
                         .IsRequired()
                         .HasColumnType("text");
 

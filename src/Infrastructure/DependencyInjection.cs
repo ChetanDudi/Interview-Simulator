@@ -1,6 +1,7 @@
 using InterviewSimulator.Application.Abstractions.AI;
 using InterviewSimulator.Application.Abstractions.Auth;
 using InterviewSimulator.Application.Abstractions.Email;
+using InterviewSimulator.Application.Abstractions.Practice;
 using InterviewSimulator.Application.Abstractions.Resumes;
 using InterviewSimulator.Infrastructure.AI;
 using InterviewSimulator.Infrastructure.Email;
@@ -32,6 +33,7 @@ public static class DependencyInjection
         // ── AI features (use ILLMService — provider-agnostic) ────────────────
         services.AddScoped<IQuestionGenerator, QuestionGenerator>();
         services.AddScoped<IAnswerEvaluator,   AnswerEvaluator>();
+        services.AddScoped<IPracticeService,   PracticeService>();
 
         // ── Email sender ─────────────────────────────────────────────────────
         services.AddScoped<IEmailSender>(sp =>

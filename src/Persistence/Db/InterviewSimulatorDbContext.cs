@@ -90,6 +90,9 @@ public sealed class InterviewSimulatorDbContext
             e.Property(q => q.QuestionText).HasColumnType("text").IsRequired();
             e.Property(q => q.Category).HasMaxLength(100).IsRequired();
             e.Property(q => q.Difficulty).HasMaxLength(50).IsRequired();
+            e.Property(q => q.QuestionType).HasMaxLength(50).IsRequired();
+            e.Property(q => q.OptionsJson).HasColumnType("text");
+            e.Property(q => q.CorrectOptionIndex);
             e.HasOne(q => q.Answer).WithOne().HasForeignKey<AppInterviewAnswer>(a => a.QuestionId).OnDelete(DeleteBehavior.Cascade);
         });
 
@@ -114,6 +117,7 @@ public sealed class InterviewSimulatorDbContext
             e.HasKey(f => f.Id);
             e.Property(f => f.Feedback).HasColumnType("text").IsRequired();
             e.Property(f => f.Suggestion).HasColumnType("text").IsRequired();
+            e.Property(f => f.IdealAnswer).HasColumnType("text").IsRequired();
         });
     }
 }

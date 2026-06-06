@@ -1,3 +1,4 @@
+using System.Text.Json;
 using InterviewSimulator.Application.Abstractions.AI;
 using InterviewSimulator.Application.Abstractions.Sessions;
 using InterviewSimulator.Application.Common;
@@ -52,12 +53,15 @@ public sealed class SessionService(
         var questions = generated
             .Select((q, i) => new AppInterviewQuestion
             {
-                Id           = Guid.NewGuid(),
-                SessionId    = session.Id,
-                QuestionText = q.Question,
-                Category     = q.Category,
-                Difficulty   = q.Difficulty,
-                OrderIndex   = i
+                Id                 = Guid.NewGuid(),
+                SessionId          = session.Id,
+                QuestionText       = q.Question,
+                Category           = q.Category,
+                Difficulty         = q.Difficulty,
+                OrderIndex         = i,
+                QuestionType       = q.QuestionType,
+                OptionsJson        = q.Options.Length > 0 ? JsonSerializer.Serialize(q.Options) : null,
+                CorrectOptionIndex = q.CorrectOptionIndex
             })
             .ToList();
 
@@ -110,6 +114,7 @@ public sealed class SessionService(
         Guid userId,
         Guid sessionId,
         IReadOnlyList<AnswerRequest> answers,
+        int timeTakenSeconds,
         CancellationToken cancellationToken = default)
     {
         var session = await dbContext.Sessions
@@ -173,17 +178,19 @@ public sealed class SessionService(
                 var q = session.Questions.ElementAtOrDefault(f.QuestionIndex);
                 return new AppQuestionFeedback
                 {
-                    Id         = Guid.NewGuid(),
-                    QuestionId = q?.Id ?? Guid.Empty,
-                    Score      = f.Score,
-                    Feedback   = f.Feedback,
-                    Suggestion = f.Suggestion
+                    Id          = Guid.NewGuid(),
+                    QuestionId  = q?.Id ?? Guid.Empty,
+                    Score       = f.Score,
+                    Feedback    = f.Feedback,
+                    Suggestion  = f.Suggestion,
+                    IdealAnswer = f.IdealAnswer
                 };
             }).ToList()
         };
 
-        session.Status         = "Completed";
-        session.CompletedAtUtc = now;
+        session.Status           = "Completed";
+        session.CompletedAtUtc   = now;
+        session.TimeTakenSeconds = timeTakenSeconds > 0 ? timeTakenSeconds : null;
 
         dbContext.FeedbackReports.Add(report);
         await dbContext.SaveChangesAsync(cancellationToken);
@@ -218,17 +225,22 @@ public sealed class SessionService(
             CommunicationScore = report.CommunicationScore,
             Summary            = report.Summary,
             GeneratedAtUtc     = report.GeneratedAtUtc,
+            TimeTakenSeconds   = session.TimeTakenSeconds,
             QuestionFeedbacks  = report.QuestionFeedbacks.Select(f =>
             {
                 var q = session.Questions.FirstOrDefault(q => q.Id == f.QuestionId);
                 return new QuestionFeedbackResponse
                 {
-                    QuestionId   = f.QuestionId,
-                    QuestionText = q?.QuestionText ?? string.Empty,
-                    AnswerText   = answers.GetValueOrDefault(f.QuestionId, string.Empty),
-                    Score        = f.Score,
-                    Feedback     = f.Feedback,
-                    Suggestion   = f.Suggestion
+                    QuestionId         = f.QuestionId,
+                    QuestionText       = q?.QuestionText ?? string.Empty,
+                    AnswerText         = answers.GetValueOrDefault(f.QuestionId, string.Empty),
+                    Score              = f.Score,
+                    Feedback           = f.Feedback,
+                    Suggestion         = f.Suggestion,
+                    IdealAnswer        = f.IdealAnswer,
+                    QuestionType       = q?.QuestionType ?? "ShortAnswer",
+                    Options            = DeserializeOptions(q?.OptionsJson),
+                    CorrectOptionIndex = q?.CorrectOptionIndex
                 };
             }).ToArray()
         };
@@ -238,22 +250,29 @@ public sealed class SessionService(
 
     private static SessionResponse MapSession(AppInterviewSession s, string resumeFileName) => new()
     {
-        Id             = s.Id,
-        ResumeId       = s.ResumeId,
-        ResumeFileName = resumeFileName,
-        Status         = s.Status,
-        CreatedAtUtc   = s.CreatedAtUtc,
-        OverallScore   = s.FeedbackReport?.OverallScore,
+        Id               = s.Id,
+        ResumeId         = s.ResumeId,
+        ResumeFileName   = resumeFileName,
+        Status           = s.Status,
+        CreatedAtUtc     = s.CreatedAtUtc,
+        OverallScore     = s.FeedbackReport?.OverallScore,
+        TimeTakenSeconds = s.TimeTakenSeconds,
         Questions      = s.Questions
             .OrderBy(q => q.OrderIndex)
             .Select(q => new QuestionResponse
             {
-                Id           = q.Id,
-                QuestionText = q.QuestionText,
-                Category     = q.Category,
-                Difficulty   = q.Difficulty,
-                OrderIndex   = q.OrderIndex
+                Id                 = q.Id,
+                QuestionText       = q.QuestionText,
+                Category           = q.Category,
+                Difficulty         = q.Difficulty,
+                OrderIndex         = q.OrderIndex,
+                QuestionType       = q.QuestionType,
+                Options            = DeserializeOptions(q.OptionsJson),
+                CorrectOptionIndex = q.CorrectOptionIndex
             })
             .ToArray()
     };
+
+    private static string[] DeserializeOptions(string? json) =>
+        string.IsNullOrEmpty(json) ? [] : JsonSerializer.Deserialize<string[]>(json) ?? [];
 }

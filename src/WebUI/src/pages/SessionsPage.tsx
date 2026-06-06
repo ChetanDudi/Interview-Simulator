@@ -18,6 +18,13 @@ function scoreColor(score: number) {
   return '#ef4444'
 }
 
+function formatTimeTaken(seconds: number): string {
+  const m = Math.floor(seconds / 60)
+  const s = seconds % 60
+  if (m === 0) return `${s}s`
+  return `${m}m${s > 0 ? ` ${s}s` : ''}`
+}
+
 export default function SessionsPage() {
   const { token } = useAuth()
   const [sessions, setSessions] = useState<SessionResponse[]>([])
@@ -63,7 +70,12 @@ export default function SessionsPage() {
                 <div>
                   <p className="session-resume">{s.resumeFileName}</p>
                   <p className="session-date">{formatDate(s.createdAtUtc)}</p>
-                  <p className="session-qcount">{s.questions.length} questions</p>
+                  <p className="session-qcount">
+                    {s.questions.length} questions
+                    {s.timeTakenSeconds != null && (
+                      <span className="session-time"> · ⏱ {formatTimeTaken(s.timeTakenSeconds)}</span>
+                    )}
+                  </p>
                 </div>
               </div>
 

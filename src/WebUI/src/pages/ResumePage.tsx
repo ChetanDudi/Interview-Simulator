@@ -29,6 +29,7 @@ export default function ResumePage() {
 
   // Question count picker modal
   const [pickerResumeId, setPickerResumeId] = useState<string | null>(null)
+  const [interviewMode,  setInterviewMode]  = useState<'text' | 'voice'>('text')
   const [questionCount,  setQuestionCount]  = useState(8)
   const [customCount,    setCustomCount]    = useState('')
   const [starting,       setStarting]       = useState(false)
@@ -56,8 +57,9 @@ export default function ResumePage() {
   function onDrop(e: DragEvent)     { e.preventDefault(); setDragging(false); const f = e.dataTransfer.files[0]; if (f) handleFile(f) }
   function onFileInput(e: ChangeEvent<HTMLInputElement>) { const f = e.target.files?.[0]; if (f) handleFile(f); e.target.value = '' }
 
-  function openPicker(resumeId: string) {
+  function openPicker(resumeId: string, mode: 'text' | 'voice') {
     setPickerResumeId(resumeId)
+    setInterviewMode(mode)
     setQuestionCount(8)
     setCustomCount('')
     setError('')
@@ -72,7 +74,7 @@ export default function ResumePage() {
     setStarting(true)
     try {
       const session = await createSession(pickerResumeId, count, token)
-      navigate(`/interview/${session.id}`)
+      navigate(interviewMode === 'voice' ? `/voice-interview/${session.id}` : `/interview/${session.id}`)
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to start interview.')
       setStarting(false)
@@ -134,10 +136,18 @@ export default function ResumePage() {
                 <button
                   className="btn btn-primary btn-sm"
                   disabled={r.status !== 'Ready'}
-                  onClick={() => openPicker(r.id)}
-                  title={r.status !== 'Ready' ? 'Text extraction failed — cannot generate questions' : ''}
+                  onClick={() => openPicker(r.id, 'text')}
+                  title={r.status !== 'Ready' ? 'Text extraction failed — cannot generate questions' : 'Type or speak your answers'}
                 >
-                  ▶ Start Interview
+                  📝 Text
+                </button>
+                <button
+                  className="btn btn-voice btn-sm"
+                  disabled={r.status !== 'Ready'}
+                  onClick={() => openPicker(r.id, 'voice')}
+                  title={r.status !== 'Ready' ? 'Text extraction failed — cannot generate questions' : 'Voice-only interview — AI reads questions aloud'}
+                >
+                  🎙 Voice
                 </button>
                 <button className="btn btn-danger btn-sm" onClick={() => handleDelete(r.id)} disabled={deletingId === r.id}>
                   {deletingId === r.id ? '…' : 'Delete'}
@@ -157,7 +167,11 @@ export default function ResumePage() {
         <div className="modal-overlay" onClick={closePicker}>
           <div className="modal-box" onClick={e => e.stopPropagation()}>
             <h2 className="modal-title">How many questions?</h2>
-            <p className="modal-sub">AI will generate questions tailored to your resume.</p>
+            <p className="modal-sub">
+              {interviewMode === 'voice'
+                ? '🎙 Voice mode — questions are read aloud, you answer by speaking.'
+                : '📝 Text mode — type or speak your answers at your own pace.'}
+            </p>
 
             <div className="q-count-presets">
               {QUESTION_PRESETS.map(n => (

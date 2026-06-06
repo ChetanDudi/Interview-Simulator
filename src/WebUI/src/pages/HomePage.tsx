@@ -22,10 +22,10 @@ const FEATURES = [
   {
     icon: '🎙️',
     title: 'Voice Interview',
-    desc: 'Answer questions by typing or speaking — your browser converts speech to text in real time.',
+    desc: 'Questions are read aloud by AI. You answer by speaking — your words appear on screen in real time.',
     status: 'live' as const,
     link: '/resumes',
-    linkLabel: 'Try It →',
+    linkLabel: 'Try Voice Mode →',
   },
   {
     icon: '📊',

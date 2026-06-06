@@ -49,6 +49,9 @@ export interface QuestionResponse {
   category: string
   difficulty: string
   orderIndex: number
+  questionType: 'MCQ' | 'ShortAnswer' | 'LongAnswer' | 'Coding' | 'Other'
+  options: string[]
+  correctOptionIndex?: number
 }
 
 export interface SessionResponse {
@@ -58,6 +61,7 @@ export interface SessionResponse {
   status: string
   createdAtUtc: string
   overallScore?: number
+  timeTakenSeconds?: number
   questions: QuestionResponse[]
 }
 
@@ -68,6 +72,10 @@ export interface QuestionFeedbackResponse {
   score: number
   feedback: string
   suggestion: string
+  idealAnswer: string
+  questionType: string
+  options: string[]
+  correctOptionIndex?: number
 }
 
 export interface ReportResponse {
@@ -78,5 +86,6 @@ export interface ReportResponse {
   communicationScore: number
   summary: string
   generatedAtUtc: string
+  timeTakenSeconds?: number
   questionFeedbacks: QuestionFeedbackResponse[]
 }

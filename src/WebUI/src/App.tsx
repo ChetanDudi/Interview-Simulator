@@ -9,8 +9,10 @@ import ResetPasswordPage  from './pages/ResetPasswordPage'
 import HomePage           from './pages/HomePage'
 import ResumePage         from './pages/ResumePage'
 import InterviewPage      from './pages/InterviewPage'
+import VoiceInterviewPage from './pages/VoiceInterviewPage'
 import ReportPage         from './pages/ReportPage'
 import SessionsPage       from './pages/SessionsPage'
+import PracticePage       from './pages/PracticePage'
 import ProtectedRoute     from './components/ProtectedRoute'
 
 function RootRedirect() {
@@ -32,9 +34,11 @@ export default function App() {
         <Route path="/reset-password"   element={<ResetPasswordPage />} />
         <Route path="/home"             element={<ProtectedRoute><HomePage /></ProtectedRoute>} />
         <Route path="/resumes"          element={<ProtectedRoute><ResumePage /></ProtectedRoute>} />
-        <Route path="/interview/:id"    element={<ProtectedRoute><InterviewPage /></ProtectedRoute>} />
+        <Route path="/interview/:id"       element={<ProtectedRoute><InterviewPage /></ProtectedRoute>} />
+        <Route path="/voice-interview/:id" element={<ProtectedRoute><VoiceInterviewPage /></ProtectedRoute>} />
         <Route path="/report/:id"       element={<ProtectedRoute><ReportPage /></ProtectedRoute>} />
         <Route path="/sessions"         element={<ProtectedRoute><SessionsPage /></ProtectedRoute>} />
+        <Route path="/practice"         element={<ProtectedRoute><PracticePage /></ProtectedRoute>} />
         <Route path="*"                 element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>

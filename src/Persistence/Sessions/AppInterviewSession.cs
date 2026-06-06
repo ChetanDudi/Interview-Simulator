@@ -10,6 +10,8 @@ public sealed class AppInterviewSession
     public DateTime  CreatedAtUtc    { get; set; }
     public DateTime? CompletedAtUtc  { get; set; }
 
+    public int?      TimeTakenSeconds { get; set; }
+
     public List<AppInterviewQuestion> Questions      { get; set; } = [];
     public AppFeedbackReport?         FeedbackReport { get; set; }
 }

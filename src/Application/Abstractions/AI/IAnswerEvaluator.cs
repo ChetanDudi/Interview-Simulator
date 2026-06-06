@@ -22,4 +22,5 @@ public sealed class QuestionEval
     public int    Score         { get; init; }
     public string Feedback      { get; init; } = string.Empty;
     public string Suggestion    { get; init; } = string.Empty;
+    public string IdealAnswer   { get; init; } = string.Empty;
 }

@@ -13,3 +13,4 @@ C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\Application\obj\Debug\net10.0\
 C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\Application\obj\Debug\net10.0\refint\InterviewSimulator.Application.dll
 C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\Application\obj\Debug\net10.0\InterviewSimulator.Application.pdb
 C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\Application\obj\Debug\net10.0\ref\InterviewSimulator.Application.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\Application\obj\Debug\net10.0\InterviewSimulator.Application.sourcelink.json

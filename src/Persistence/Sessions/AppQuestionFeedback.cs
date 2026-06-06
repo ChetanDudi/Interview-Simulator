@@ -6,6 +6,7 @@ public sealed class AppQuestionFeedback
     public Guid   ReportId   { get; set; }
     public Guid   QuestionId { get; set; }
     public int    Score      { get; set; }
-    public string Feedback   { get; set; } = string.Empty;
-    public string Suggestion { get; set; } = string.Empty;
+    public string Feedback    { get; set; } = string.Empty;
+    public string Suggestion  { get; set; } = string.Empty;
+    public string IdealAnswer { get; set; } = string.Empty;
 }

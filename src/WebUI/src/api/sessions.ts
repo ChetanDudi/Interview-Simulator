@@ -37,12 +37,13 @@ export async function getMySessions(token: string): Promise<SessionResponse[]> {
 export async function submitAnswers(
   sessionId: string,
   answers: { questionId: string; answerText: string }[],
+  timeTakenSeconds: number,
   token: string
 ): Promise<void> {
   const res = await fetch(`${BASE}/${sessionId}/submit`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
-    body: JSON.stringify(answers),
+    body: JSON.stringify({ answers, timeTakenSeconds }),
   })
   await handleResponse<void>(res)
 }

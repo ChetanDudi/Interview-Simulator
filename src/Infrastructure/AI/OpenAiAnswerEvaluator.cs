@@ -27,7 +27,8 @@ public sealed class AnswerEvaluator(ILLMService llm) : IAnswerEvaluator
                   "questionIndex": 0,
                   "score": 0-10,
                   "feedback": "What was good or lacking in this answer.",
-                  "suggestion": "Specific way to improve this answer."
+                  "suggestion": "Specific way to improve this answer.",
+                  "idealAnswer": "A concise model answer a strong candidate would give (3-5 sentences)."
                 }
               ]
             }
@@ -54,7 +55,8 @@ public sealed class AnswerEvaluator(ILLMService llm) : IAnswerEvaluator
                     QuestionIndex = f.QuestionIndex,
                     Score         = f.Score,
                     Feedback      = f.Feedback,
-                    Suggestion    = f.Suggestion
+                    Suggestion    = f.Suggestion,
+                    IdealAnswer   = f.IdealAnswer
                 })
                 .ToArray()
         };
@@ -83,5 +85,6 @@ public sealed class AnswerEvaluator(ILLMService llm) : IAnswerEvaluator
         public int    Score         { get; init; }
         public string Feedback      { get; init; } = string.Empty;
         public string Suggestion    { get; init; } = string.Empty;
+        public string IdealAnswer   { get; init; } = string.Empty;
     }
 }
