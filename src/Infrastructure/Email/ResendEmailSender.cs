@@ -6,12 +6,13 @@ using Microsoft.Extensions.Options;
 
 namespace InterviewSimulator.Infrastructure.Email;
 
-public sealed class ResendEmailSender(IOptions<EmailOptions> options, IHttpClientFactory httpClientFactory) : IEmailSender
+public sealed class ResendEmailSender(IOptions<EmailOptions> options) : IEmailSender
 {
+    private static readonly HttpClient Http = new();
+
     public async Task SendAsync(string to, string subject, string body, CancellationToken cancellationToken = default)
     {
-        var opt    = options.Value;
-        var client = httpClientFactory.CreateClient("Resend");
+        var opt = options.Value;
 
         var payload = new
         {
@@ -21,10 +22,13 @@ public sealed class ResendEmailSender(IOptions<EmailOptions> options, IHttpClien
             text    = body
         };
 
-        var json    = JsonSerializer.Serialize(payload);
-        var content = new StringContent(json, Encoding.UTF8, "application/json");
+        var request = new HttpRequestMessage(HttpMethod.Post, "https://api.resend.com/emails")
+        {
+            Content = new StringContent(JsonSerializer.Serialize(payload), Encoding.UTF8, "application/json")
+        };
+        request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", opt.ResendApiKey);
 
-        var response = await client.PostAsync("https://api.resend.com/emails", content, cancellationToken);
+        var response = await Http.SendAsync(request, cancellationToken);
         response.EnsureSuccessStatusCode();
     }
 }

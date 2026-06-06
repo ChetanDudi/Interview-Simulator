@@ -36,13 +36,6 @@ public static class DependencyInjection
         services.AddScoped<IPracticeService,   PracticeService>();
 
         // ── Email sender ─────────────────────────────────────────────────────
-        services.AddHttpClient("Resend", (sp, client) =>
-        {
-            var opt = sp.GetRequiredService<IOptions<EmailOptions>>().Value;
-            client.DefaultRequestHeaders.Authorization =
-                new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", opt.ResendApiKey);
-        });
-
         services.AddScoped<IEmailSender>(sp =>
         {
             var opt = sp.GetRequiredService<IOptions<EmailOptions>>().Value;
