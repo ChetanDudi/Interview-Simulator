@@ -1,6 +1,8 @@
 import type { ReportResponse, SessionResponse } from './types'
 
-const BASE = '/api/sessions'
+import { apiBase } from './config'
+
+const BASE = `${apiBase}/api/sessions`
 
 async function handleResponse<T>(res: Response): Promise<T> {
   if (!res.ok) {
@@ -64,6 +66,6 @@ export async function shareSession(sessionId: string, token: string): Promise<{ 
 }
 
 export async function getSharedInterview(shareToken: string): Promise<ReportResponse> {
-  const res = await fetch(`/api/public/interview/${shareToken}`)
+  const res = await fetch(`${apiBase}/api/public/interview/${shareToken}`)
   return handleResponse<ReportResponse>(res)
 }

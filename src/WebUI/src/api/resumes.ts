@@ -1,6 +1,8 @@
 import type { ResumeResponse } from './types'
 
-const BASE = '/api/resumes'
+import { apiBase } from './config'
+
+const BASE = `${apiBase}/api/resumes`
 
 async function handleResponse<T>(res: Response): Promise<T> {
   if (!res.ok) {

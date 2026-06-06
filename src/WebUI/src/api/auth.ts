@@ -7,7 +7,9 @@ import type {
   ResetPasswordRequest,
 } from './types'
 
-const BASE = '/api/auth'
+import { apiBase } from './config'
+
+const BASE = `${apiBase}/api/auth`
 
 async function handleResponse<T>(res: Response): Promise<T> {
   if (!res.ok) {

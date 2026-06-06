@@ -1,6 +1,8 @@
 import type { PracticeSessionResponse } from './types'
 
-const BASE = '/api/practice'
+import { apiBase } from './config'
+
+const BASE = `${apiBase}/api/practice`
 
 async function handleResponse<T>(res: Response): Promise<T> {
   if (!res.ok) {
@@ -46,6 +48,6 @@ export async function sharePracticeSession(id: string, token: string): Promise<{
 }
 
 export async function getSharedPractice(shareToken: string): Promise<PracticeSessionResponse> {
-  const res = await fetch(`/api/public/practice/${shareToken}`)
+  const res = await fetch(`${apiBase}/api/public/practice/${shareToken}`)
   return handleResponse<PracticeSessionResponse>(res)
 }

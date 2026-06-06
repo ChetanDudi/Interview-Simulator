@@ -8,6 +8,10 @@ using InterviewSimulator.Persistence;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 
+// Load .env file for local development (safe to call even in production — won't override real env vars)
+if (File.Exists(".env"))
+    DotNetEnv.Env.Load(".env", new DotNetEnv.LoadOptions(overwriteExistingVars: false));
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Logging.ClearProviders();
@@ -18,10 +22,14 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("WebUiDevelopment", policy =>
+    options.AddPolicy("WebUiPolicy", policy =>
     {
+        var origins = builder.Configuration
+            .GetSection("Cors:AllowedOrigins")
+            .Get<string[]>() ?? ["http://localhost:5173"];
+
         policy
-            .WithOrigins("http://localhost:5173")
+            .WithOrigins(origins)
             .AllowAnyHeader()
             .AllowAnyMethod();
     });
@@ -58,8 +66,10 @@ builder.Services
 
 var app = builder.Build();
 
-app.UseHttpsRedirection();
-app.UseCors("WebUiDevelopment");
+if (app.Environment.IsDevelopment())
+    app.UseHttpsRedirection();
+
+app.UseCors("WebUiPolicy");
 app.UseAuthentication();
 app.UseAuthorization();
 
