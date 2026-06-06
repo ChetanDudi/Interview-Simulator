@@ -4,12 +4,13 @@ public sealed class EmailOptions
 {
     public const string SectionName = "Email";
 
-    /// <summary>"Console" (dev), "Smtp", or "Resend" (production).</summary>
-    public string     Provider     { get; init; } = "Console";
-    public string     From         { get; init; } = "noreply@interviewsimulator.dev";
-    public string     FromName     { get; init; } = "Interview Simulator";
-    public string     ResendApiKey { get; init; } = string.Empty;
-    public SmtpConfig Smtp         { get; init; } = new();
+    /// <summary>"Console" (dev), "Smtp", "Resend", or "SendGrid" (production).</summary>
+    public string     Provider        { get; init; } = "Console";
+    public string     From            { get; init; } = "noreply@interviewsimulator.dev";
+    public string     FromName        { get; init; } = "Interview Simulator";
+    public string     ResendApiKey    { get; init; } = string.Empty;
+    public string     SendGridApiKey  { get; init; } = string.Empty;
+    public SmtpConfig Smtp            { get; init; } = new();
 }
 
 public sealed class SmtpConfig

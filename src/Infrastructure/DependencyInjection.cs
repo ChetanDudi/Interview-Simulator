@@ -39,6 +39,8 @@ public static class DependencyInjection
         services.AddScoped<IEmailSender>(sp =>
         {
             var opt = sp.GetRequiredService<IOptions<EmailOptions>>().Value;
+            if (opt.Provider.Equals("SendGrid", StringComparison.OrdinalIgnoreCase))
+                return sp.GetRequiredService<SendGridEmailSender>();
             if (opt.Provider.Equals("Resend", StringComparison.OrdinalIgnoreCase))
                 return sp.GetRequiredService<ResendEmailSender>();
             if (opt.Provider.Equals("Smtp", StringComparison.OrdinalIgnoreCase))
@@ -48,6 +50,7 @@ public static class DependencyInjection
         services.AddTransient<ConsoleEmailSender>();
         services.AddTransient<SmtpEmailSender>();
         services.AddTransient<ResendEmailSender>();
+        services.AddTransient<SendGridEmailSender>();
 
         return services;
     }
