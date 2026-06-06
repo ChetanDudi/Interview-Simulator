@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "bvJT/LdJlNE=",
+  "dgSpecHash": "yeA1/atqNfI=",
   "success": true,
   "projectFilePath": "C:\\Users\\CHETAN DUDI\\OneDrive\\Desktop\\Project\\src\\API\\InterviewSimulator.API.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\CHETAN DUDI\\.nuget\\packages\\dotnetenv\\3.2.0\\dotnetenv.3.2.0.nupkg.sha512",
     "C:\\Users\\CHETAN DUDI\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\CHETAN DUDI\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\10.0.8\\microsoft.aspnetcore.authentication.jwtbearer.10.0.8.nupkg.sha512",
     "C:\\Users\\CHETAN DUDI\\.nuget\\packages\\microsoft.aspnetcore.identity.entityframeworkcore\\10.0.8\\microsoft.aspnetcore.identity.entityframeworkcore.10.0.8.nupkg.sha512",
@@ -33,6 +34,7 @@
     "C:\\Users\\CHETAN DUDI\\.nuget\\packages\\npgsql.entityframeworkcore.postgresql\\10.0.2\\npgsql.entityframeworkcore.postgresql.10.0.2.nupkg.sha512",
     "C:\\Users\\CHETAN DUDI\\.nuget\\packages\\openai\\2.11.0\\openai.2.11.0.nupkg.sha512",
     "C:\\Users\\CHETAN DUDI\\.nuget\\packages\\pdfpig\\0.1.14\\pdfpig.0.1.14.nupkg.sha512",
+    "C:\\Users\\CHETAN DUDI\\.nuget\\packages\\superpower\\3.0.0\\superpower.3.0.0.nupkg.sha512",
     "C:\\Users\\CHETAN DUDI\\.nuget\\packages\\system.clientmodel\\1.10.0\\system.clientmodel.1.10.0.nupkg.sha512",
     "C:\\Users\\CHETAN DUDI\\.nuget\\packages\\system.codedom\\6.0.0\\system.codedom.6.0.0.nupkg.sha512",
     "C:\\Users\\CHETAN DUDI\\.nuget\\packages\\system.composition\\9.0.0\\system.composition.9.0.0.nupkg.sha512",
