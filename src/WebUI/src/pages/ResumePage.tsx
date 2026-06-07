@@ -30,9 +30,11 @@ export default function ResumePage() {
   // Question count picker modal
   const [pickerResumeId, setPickerResumeId] = useState<string | null>(null)
   const [interviewMode,  setInterviewMode]  = useState<'text' | 'voice'>('text')
+  const [sessionMode,    setSessionMode]    = useState<'regular' | 'warmup' | 'coding'>('regular')
   const [questionCount,  setQuestionCount]  = useState(8)
   const [customCount,    setCustomCount]    = useState('')
   const [targetRole,     setTargetRole]     = useState('')
+  const [timedSeconds,   setTimedSeconds]   = useState(0)
   const [starting,       setStarting]       = useState(false)
 
   useEffect(() => {
@@ -58,25 +60,29 @@ export default function ResumePage() {
   function onDrop(e: DragEvent)     { e.preventDefault(); setDragging(false); const f = e.dataTransfer.files[0]; if (f) handleFile(f) }
   function onFileInput(e: ChangeEvent<HTMLInputElement>) { const f = e.target.files?.[0]; if (f) handleFile(f); e.target.value = '' }
 
-  function openPicker(resumeId: string, mode: 'text' | 'voice') {
+  function openPicker(resumeId: string, mode: 'text' | 'voice', sMode: 'regular' | 'warmup' | 'coding' = 'regular') {
     setPickerResumeId(resumeId)
     setInterviewMode(mode)
-    setQuestionCount(8)
+    setSessionMode(sMode)
+    setQuestionCount(sMode === 'warmup' ? 3 : 8)
     setCustomCount('')
     setTargetRole('')
+    setTimedSeconds(0)
     setError('')
   }
   function closePicker() { setPickerResumeId(null) }
 
   async function handleStartInterview() {
     if (!pickerResumeId || !token) return
-    const count = customCount !== '' ? parseInt(customCount, 10) : questionCount
+    const count = sessionMode === 'warmup' ? 3 : (customCount !== '' ? parseInt(customCount, 10) : questionCount)
     if (!count || count < 3 || count > 20) { setError('Choose between 3 and 20 questions.'); return }
     setError('')
     setStarting(true)
     try {
-      const session = await createSession(pickerResumeId, count, token, targetRole.trim() || undefined)
-      navigate(interviewMode === 'voice' ? `/voice-interview/${session.id}` : `/interview/${session.id}`)
+      const sessionType = sessionMode === 'coding' ? 'Coding' : undefined
+      const session = await createSession(pickerResumeId, count, token, targetRole.trim() || undefined, sessionType)
+      const timedParam = timedSeconds > 0 ? `?timed=${timedSeconds}` : ''
+      navigate(interviewMode === 'voice' ? `/voice-interview/${session.id}` : `/interview/${session.id}${timedParam}`)
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to start interview.')
       setStarting(false)
@@ -170,6 +176,22 @@ export default function ResumePage() {
                   >
                     🎙 Voice Interview
                   </button>
+                  <button
+                    className="btn btn-outline btn-sm"
+                    disabled={r.status !== 'Ready'}
+                    onClick={() => openPicker(r.id, 'text', 'warmup')}
+                    title="3-question quick warmup"
+                  >
+                    ⚡ Quick Warmup
+                  </button>
+                  <button
+                    className="btn btn-outline btn-sm"
+                    disabled={r.status !== 'Ready'}
+                    onClick={() => openPicker(r.id, 'text', 'coding')}
+                    title="DSA coding interview with Monaco editor"
+                  >
+                    💻 Coding Interview
+                  </button>
                   {r.status === 'Ready' && (
                     <>
                       <Link to={`/resumes/${r.id}/review`}       className="btn btn-outline btn-sm">📋 AI Review</Link>
@@ -195,47 +217,80 @@ export default function ResumePage() {
       {pickerResumeId && (
         <div className="modal-overlay" onClick={closePicker}>
           <div className="modal-box" onClick={e => e.stopPropagation()}>
-            <h2 className="modal-title">How many questions?</h2>
+            <h2 className="modal-title">
+              {sessionMode === 'warmup' ? '⚡ Quick Warmup' : sessionMode === 'coding' ? '💻 Coding Interview' : 'How many questions?'}
+            </h2>
             <p className="modal-sub">
-              {interviewMode === 'voice'
+              {sessionMode === 'warmup'
+                ? '3 rapid-fire questions to loosen up before a real interview.'
+                : sessionMode === 'coding'
+                ? '💻 DSA problems tailored to your tech stack — Monaco code editor included.'
+                : interviewMode === 'voice'
                 ? '🎙 Voice mode — questions are read aloud, you answer by speaking.'
                 : '📝 Text mode — type or speak your answers at your own pace.'}
             </p>
 
-            <div className="q-count-presets">
-              {QUESTION_PRESETS.map(n => (
-                <button
-                  key={n}
-                  className={`q-count-btn${questionCount === n && customCount === '' ? ' q-count-btn--active' : ''}`}
-                  onClick={() => { setQuestionCount(n); setCustomCount('') }}
-                >
-                  {n}
-                </button>
-              ))}
-            </div>
+            {sessionMode === 'regular' && (
+              <>
+                <div className="q-count-presets">
+                  {QUESTION_PRESETS.map(n => (
+                    <button
+                      key={n}
+                      className={`q-count-btn${questionCount === n && customCount === '' ? ' q-count-btn--active' : ''}`}
+                      onClick={() => { setQuestionCount(n); setCustomCount('') }}
+                    >
+                      {n}
+                    </button>
+                  ))}
+                </div>
+                <div className="q-count-custom">
+                  <label className="q-count-custom-label">Custom (3 – 20)</label>
+                  <input
+                    type="number" min={3} max={20} placeholder="e.g. 12"
+                    value={customCount} onChange={e => setCustomCount(e.target.value)}
+                    className="q-count-input"
+                  />
+                </div>
 
-            <div className="q-count-custom">
-              <label className="q-count-custom-label">Custom (3 – 20)</label>
-              <input
-                type="number"
-                min={3}
-                max={20}
-                placeholder="e.g. 12"
-                value={customCount}
-                onChange={e => setCustomCount(e.target.value)}
-                className="q-count-input"
-              />
-            </div>
+                {/* Timed mode */}
+                <div className="q-count-custom" style={{ marginTop: 16 }}>
+                  <label className="q-count-custom-label">Timed Mode <span style={{ fontWeight: 400, color: 'var(--text-muted)' }}>(optional)</span></label>
+                  <div style={{ display: 'flex', gap: 8, marginTop: 6, flexWrap: 'wrap' }}>
+                    {[0, 30, 60, 90].map(s => (
+                      <button key={s}
+                        className={`q-count-btn${timedSeconds === s ? ' q-count-btn--active' : ''}`}
+                        onClick={() => setTimedSeconds(s)}
+                      >
+                        {s === 0 ? 'Off' : `${s}s`}
+                      </button>
+                    ))}
+                  </div>
+                  <p style={{ color: 'var(--text-muted)', fontSize: '0.78rem', marginTop: 4 }}>
+                    {timedSeconds > 0 ? `Auto-advance after ${timedSeconds}s per question.` : 'No time limit per question.'}
+                  </p>
+                </div>
+              </>
+            )}
+
+            {sessionMode === 'coding' && (
+              <div className="q-count-presets" style={{ marginTop: 12 }}>
+                {[3, 5, 8].map(n => (
+                  <button key={n}
+                    className={`q-count-btn${questionCount === n && customCount === '' ? ' q-count-btn--active' : ''}`}
+                    onClick={() => { setQuestionCount(n); setCustomCount('') }}
+                  >
+                    {n}
+                  </button>
+                ))}
+              </div>
+            )}
 
             <div className="q-count-custom" style={{ marginTop: 16 }}>
               <label className="q-count-custom-label">Target Role <span style={{ fontWeight: 400, color: 'var(--text-muted)' }}>(optional)</span></label>
               <input
-                type="text"
-                placeholder="e.g. Senior Frontend Engineer"
-                value={targetRole}
-                onChange={e => setTargetRole(e.target.value)}
-                className="q-count-input"
-                style={{ width: '100%', marginTop: 6 }}
+                type="text" placeholder="e.g. Senior Frontend Engineer"
+                value={targetRole} onChange={e => setTargetRole(e.target.value)}
+                className="q-count-input" style={{ width: '100%', marginTop: 6 }}
               />
               <p style={{ color: 'var(--text-muted)', fontSize: '0.78rem', marginTop: 4 }}>AI will tailor questions for this specific role.</p>
             </div>
@@ -245,7 +300,11 @@ export default function ResumePage() {
             <div className="modal-actions">
               <button className="btn btn-ghost" onClick={closePicker}>Cancel</button>
               <button className="btn btn-primary" onClick={handleStartInterview} disabled={starting}>
-                {starting ? 'Generating questions…' : `Start with ${customCount || questionCount} questions`}
+                {starting
+                  ? 'Generating questions…'
+                  : sessionMode === 'warmup'
+                  ? 'Start Warmup (3 questions)'
+                  : `Start with ${customCount || questionCount} questions`}
               </button>
             </div>
           </div>

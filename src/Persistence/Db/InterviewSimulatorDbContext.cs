@@ -1,3 +1,4 @@
+using InterviewSimulator.Persistence.Behavioral;
 using InterviewSimulator.Persistence.Identity;
 using InterviewSimulator.Persistence.OtpVerification;
 using InterviewSimulator.Persistence.Practice;
@@ -32,6 +33,7 @@ public sealed class InterviewSimulatorDbContext
     public DbSet<AppQuestionFeedback>  QuestionFeedbacks { get; set; }
     public DbSet<AppPracticeSession>   PracticeSessions  { get; set; }
     public DbSet<AppPracticeQuestion>  PracticeQuestions { get; set; }
+    public DbSet<AppBehavioralSession> BehavioralSessions { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -81,10 +83,23 @@ public sealed class InterviewSimulatorDbContext
             e.HasKey(s => s.Id);
             e.Property(s => s.Status).HasMaxLength(50).IsRequired();
             e.Property(s => s.TargetRole).HasMaxLength(200);
+            e.Property(s => s.SessionType).HasMaxLength(20);
             e.HasOne<AppUser>().WithMany().HasForeignKey(s => s.UserId).OnDelete(DeleteBehavior.Cascade);
             e.HasOne<AppResume>().WithMany().HasForeignKey(s => s.ResumeId).OnDelete(DeleteBehavior.Cascade);
             e.HasMany(s => s.Questions).WithOne().HasForeignKey(q => q.SessionId).OnDelete(DeleteBehavior.Cascade);
             e.HasOne(s => s.FeedbackReport).WithOne().HasForeignKey<AppFeedbackReport>(r => r.SessionId).OnDelete(DeleteBehavior.Cascade);
+        });
+
+        builder.Entity<AppBehavioralSession>(e =>
+        {
+            e.ToTable("BehavioralSessions");
+            e.HasKey(s => s.Id);
+            e.Property(s => s.Topic).HasMaxLength(500).IsRequired();
+            e.Property(s => s.Status).HasMaxLength(20).IsRequired();
+            e.Property(s => s.QuestionsJson).HasColumnType("text").IsRequired();
+            e.Property(s => s.FeedbackJson).HasColumnType("text");
+            e.HasOne<AppUser>().WithMany().HasForeignKey(s => s.UserId).OnDelete(DeleteBehavior.Cascade);
+            e.HasIndex(s => s.UserId);
         });
 
         builder.Entity<AppInterviewQuestion>(e =>

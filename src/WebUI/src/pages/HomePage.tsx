@@ -1,44 +1,25 @@
 import { Link } from 'react-router-dom'
+import { useEffect, useState } from 'react'
 import NavBar from '../components/NavBar'
 import { useAuth } from '../context/AuthContext'
+import { getAnalytics } from '../api/analytics'
+import type { AnalyticsResponse } from '../api/types'
 
 const FEATURES = [
-  {
-    icon: '📄',
-    title: 'Resume Upload',
-    desc: 'Upload your PDF resume. AI extracts your skills, projects, and experience automatically.',
-    status: 'live' as const,
-    link: '/resumes',
-    linkLabel: 'Upload Resume →',
-  },
-  {
-    icon: '🎯',
-    title: 'AI Question Generation',
-    desc: 'GPT-4o-mini generates 8 personalised interview questions based on your resume.',
-    status: 'live' as const,
-    link: '/resumes',
-    linkLabel: 'Start Interview →',
-  },
-  {
-    icon: '🎙️',
-    title: 'Voice Interview',
-    desc: 'Questions are read aloud by AI. You answer by speaking — your words appear on screen in real time.',
-    status: 'live' as const,
-    link: '/resumes',
-    linkLabel: 'Try Voice Mode →',
-  },
-  {
-    icon: '📊',
-    title: 'Feedback Report',
-    desc: 'Receive AI-scored feedback for every answer with overall, technical, and communication scores.',
-    status: 'live' as const,
-    link: '/sessions',
-    linkLabel: 'View Reports →',
-  },
+  { icon: '📄', title: 'Resume Upload',        desc: 'Upload your PDF resume. AI extracts your skills, projects, and experience automatically.', link: '/resumes',    linkLabel: 'Upload Resume →' },
+  { icon: '🎯', title: 'AI Interview',          desc: 'AI generates personalized interview questions based on your resume — text or voice mode.', link: '/resumes',    linkLabel: 'Start Interview →' },
+  { icon: '🎤', title: 'Behavioral Interview',  desc: 'Practice STAR method soft-skill questions — no resume needed, pure communication prep.',  link: '/behavioral', linkLabel: 'Try Behavioral →' },
+  { icon: '📊', title: 'Analytics Dashboard',  desc: 'Track your streak, score trend, and identify your weakest categories over time.',          link: '/analytics',  linkLabel: 'View Analytics →' },
 ]
 
 export default function HomePage() {
-  const { user } = useAuth()
+  const { user, token } = useAuth()
+  const [analytics, setAnalytics] = useState<AnalyticsResponse | null>(null)
+
+  useEffect(() => {
+    if (!token) return
+    getAnalytics(token).then(setAnalytics).catch(() => {})
+  }, [token])
 
   return (
     <>
@@ -49,6 +30,39 @@ export default function HomePage() {
           <p className="hero-subtitle">
             Your AI-powered interview coach is ready. Upload a resume to get started.
           </p>
+
+          {analytics && (
+            <div className="home-stats-row">
+              <div className="home-stat">
+                <span className="home-stat-icon">🔥</span>
+                <span className="home-stat-value">{analytics.streak}</span>
+                <span className="home-stat-label">day streak</span>
+              </div>
+              <div className="home-stat">
+                <span className="home-stat-icon">📊</span>
+                <span className="home-stat-value">{analytics.totalInterviews}</span>
+                <span className="home-stat-label">interviews</span>
+              </div>
+              {analytics.averageScore != null && (
+                <div className="home-stat">
+                  <span className="home-stat-icon">⭐</span>
+                  <span className="home-stat-value"
+                    style={{ color: analytics.averageScore >= 70 ? '#10b981' : analytics.averageScore >= 50 ? '#f59e0b' : '#ef4444' }}>
+                    {Math.round(analytics.averageScore)}
+                  </span>
+                  <span className="home-stat-label">avg score</span>
+                </div>
+              )}
+              {analytics.bestScore != null && (
+                <div className="home-stat">
+                  <span className="home-stat-icon">🏆</span>
+                  <span className="home-stat-value" style={{ color: '#10b981' }}>{analytics.bestScore}</span>
+                  <span className="home-stat-label">best score</span>
+                </div>
+              )}
+            </div>
+          )}
+
           <Link to="/resumes" className="btn btn-primary" style={{ marginTop: 20 }}>
             Get Started →
           </Link>

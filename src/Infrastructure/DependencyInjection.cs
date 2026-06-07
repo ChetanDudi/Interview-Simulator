@@ -31,10 +31,11 @@ public static class DependencyInjection
         services.AddScoped<ILLMService, GroqService>();
 
         // ── AI features (use ILLMService — provider-agnostic) ────────────────
-        services.AddScoped<IQuestionGenerator, QuestionGenerator>();
-        services.AddScoped<IAnswerEvaluator,   AnswerEvaluator>();
-        services.AddScoped<IPracticeService,   PracticeService>();
-        services.AddScoped<IResumeAnalyser,    ResumeAnalyser>();
+        services.AddScoped<IQuestionGenerator,          QuestionGenerator>();
+        services.AddScoped<IAnswerEvaluator,            AnswerEvaluator>();
+        services.AddScoped<IPracticeService,            PracticeService>();
+        services.AddScoped<IResumeAnalyser,             ResumeAnalyser>();
+        services.AddScoped<IBehavioralQuestionGenerator, BehavioralQuestionGenerator>();
 
         // ── Email sender ─────────────────────────────────────────────────────
         services.AddScoped<IEmailSender>(sp =>

@@ -16,7 +16,7 @@ public sealed class SessionService(
 {
     // ── Create Session ────────────────────────────────────────────────────────
 
-    public async Task<CreateSessionResult> CreateAsync(Guid userId, Guid resumeId, int questionCount = 8, string? targetRole = null, CancellationToken cancellationToken = default)
+    public async Task<CreateSessionResult> CreateAsync(Guid userId, Guid resumeId, int questionCount = 8, string? targetRole = null, string? sessionType = null, CancellationToken cancellationToken = default)
     {
         var resume = await dbContext.Resumes
             .FirstOrDefaultAsync(r => r.Id == resumeId && r.UserId == userId, cancellationToken);
@@ -31,7 +31,7 @@ public sealed class SessionService(
         try
         {
             var clampedCount = Math.Clamp(questionCount, 3, 20);
-            generated = await questionGenerator.GenerateAsync(resume.ExtractedText, clampedCount, targetRole, cancellationToken);
+            generated = await questionGenerator.GenerateAsync(resume.ExtractedText, clampedCount, targetRole, sessionType, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -48,7 +48,8 @@ public sealed class SessionService(
             ResumeId     = resumeId,
             Status       = "InProgress",
             CreatedAtUtc = DateTime.UtcNow,
-            TargetRole   = targetRole
+            TargetRole   = targetRole,
+            SessionType  = sessionType
         };
 
         var questions = generated

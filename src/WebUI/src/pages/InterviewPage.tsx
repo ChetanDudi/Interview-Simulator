@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import NavBar from '../components/NavBar'
 import { useAuth } from '../context/AuthContext'
 import { getSession, submitAnswers, shareSession } from '../api/sessions'
 import type { QuestionResponse } from '../api/types'
+import Editor from '@monaco-editor/react'
 
 interface ISpeechRecognition extends EventTarget {
   continuous: boolean
@@ -55,9 +56,12 @@ function McqOptions({
 }
 
 export default function InterviewPage() {
-  const { id }    = useParams<{ id: string }>()
-  const { token } = useAuth()
-  const navigate  = useNavigate()
+  const { id }           = useParams<{ id: string }>()
+  const { token }        = useAuth()
+  const navigate         = useNavigate()
+  const [searchParams]   = useSearchParams()
+  const timedSeconds     = parseInt(searchParams.get('timed') ?? '0', 10)
+  const isTimedMode      = timedSeconds > 0
 
   const [questions,      setQuestions]     = useState<QuestionResponse[]>([])
   const [answers,        setAnswers]       = useState<Record<string, string>>({})
@@ -72,13 +76,15 @@ export default function InterviewPage() {
   const [shareToken,     setShareToken]    = useState<string | undefined>()
   const [sharing,        setSharing]       = useState(false)
   const [shareCopied,    setShareCopied]   = useState(false)
+  const [countdown,      setCountdown]     = useState(timedSeconds)
 
-  const recognitionRef  = useRef<ISpeechRecognition | null>(null)
-  const baseAnswerRef   = useRef('')
-  const sessionFinalRef = useRef('')
-  const currentIdRef    = useRef('')
-  const startTimeRef    = useRef<number | null>(null)
+  const recognitionRef   = useRef<ISpeechRecognition | null>(null)
+  const baseAnswerRef    = useRef('')
+  const sessionFinalRef  = useRef('')
+  const currentIdRef     = useRef('')
+  const startTimeRef     = useRef<number | null>(null)
   const timerIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
+  const countdownRef     = useRef<ReturnType<typeof setInterval> | null>(null)
   const [elapsed, setElapsed] = useState(0)
 
   useEffect(() => {
@@ -100,9 +106,32 @@ export default function InterviewPage() {
     return () => { if (timerIntervalRef.current) clearInterval(timerIntervalRef.current) }
   }, [id, token])
 
+  // Countdown timer per question in timed mode
+  useEffect(() => {
+    if (!isTimedMode || questions.length === 0) return
+    setCountdown(timedSeconds)
+    if (countdownRef.current) clearInterval(countdownRef.current)
+    countdownRef.current = setInterval(() => {
+      setCountdown(prev => {
+        if (prev <= 1) {
+          clearInterval(countdownRef.current!)
+          // Auto-advance or submit on last question
+          setCurrentIndex(ci => {
+            if (ci < questions.length - 1) return ci + 1
+            return ci
+          })
+          return timedSeconds
+        }
+        return prev - 1
+      })
+    }, 1000)
+    return () => { if (countdownRef.current) clearInterval(countdownRef.current) }
+  }, [currentIndex, isTimedMode, questions.length, timedSeconds])
+
   const current = questions[currentIndex]
   const total   = questions.length
   const isMCQ   = current?.questionType === 'MCQ'
+  const isCoding = current?.questionType === 'Coding'
 
   function setAnswer(questionId: string, text: string) {
     setAnswers(prev => ({ ...prev, [questionId]: text }))
@@ -238,6 +267,11 @@ export default function InterviewPage() {
         <div className="interview-header">
           <span className="interview-step">Question {currentIndex + 1} of {total}</span>
           <span className="interview-timer">⏱ {formatTime(elapsed)}</span>
+          {isTimedMode && (
+            <span className={`interview-countdown${countdown <= 10 ? ' interview-countdown--urgent' : ''}`}>
+              ⏰ {countdown}s
+            </span>
+          )}
           <button className="btn btn-ghost btn-sm" onClick={handleShare} disabled={sharing} title="Share interview questions">
             {shareCopied ? '✓ Copied!' : sharing ? '…' : '🔗 Share'}
           </button>
@@ -297,7 +331,7 @@ export default function InterviewPage() {
             <>
               <div className="answer-label-row">
                 <label htmlFor="answer">
-                  {current?.questionType === 'Coding' ? 'Write your code' : 'Your Answer'}
+                  {isCoding ? 'Write your code' : 'Your Answer'}
                 </label>
                 <div style={{ display: 'flex', gap: 8 }}>
                   <button
@@ -307,7 +341,7 @@ export default function InterviewPage() {
                   >
                     {isReview ? '🔖 Marked' : '🔖 Review'}
                   </button>
-                  {voiceSupported && current?.questionType !== 'Coding' && (
+                  {voiceSupported && !isCoding && (
                     <button
                       type="button"
                       className={`mic-btn${listening ? ' mic-btn--active' : ''}`}
@@ -318,20 +352,31 @@ export default function InterviewPage() {
                   )}
                 </div>
               </div>
-              <textarea
-                id="answer"
-                className={`answer-textarea${current?.questionType === 'Coding' ? ' answer-textarea--code' : ''}`}
-                placeholder={
-                  current?.questionType === 'Coding'
-                    ? '// Write your code here…'
-                    : current?.questionType === 'ShortAnswer'
-                    ? 'Give a brief, focused answer (1-2 sentences)…'
-                    : 'Type your detailed answer here, or click the mic to speak…'
-                }
-                value={answers[current?.id] ?? ''}
-                onChange={e => setAnswer(current?.id ?? '', e.target.value)}
-                rows={current?.questionType === 'ShortAnswer' ? 3 : current?.questionType === 'Coding' ? 10 : 7}
-              />
+              {isCoding ? (
+                <div className="monaco-wrapper">
+                  <Editor
+                    height="320px"
+                    defaultLanguage="javascript"
+                    theme="vs-dark"
+                    value={answers[current?.id] ?? '// Write your solution here\n'}
+                    onChange={v => setAnswer(current?.id ?? '', v ?? '')}
+                    options={{ fontSize: 14, minimap: { enabled: false }, scrollBeyondLastLine: false }}
+                  />
+                </div>
+              ) : (
+                <textarea
+                  id="answer"
+                  className="answer-textarea"
+                  placeholder={
+                    current?.questionType === 'ShortAnswer'
+                      ? 'Give a brief, focused answer (1-2 sentences)…'
+                      : 'Type your detailed answer here, or click the mic to speak…'
+                  }
+                  value={answers[current?.id] ?? ''}
+                  onChange={e => setAnswer(current?.id ?? '', e.target.value)}
+                  rows={current?.questionType === 'ShortAnswer' ? 3 : 7}
+                />
+              )}
               {listening && (
                 <p className="voice-hint">
                   🔴 Listening… speak now

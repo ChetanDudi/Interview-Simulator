@@ -22,6 +22,48 @@ namespace InterviewSimulator.Persistence.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("InterviewSimulator.Persistence.Behavioral.AppBehavioralSession", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("CompletedAtUtc")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("CreatedAtUtc")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("FeedbackJson")
+                        .HasColumnType("text");
+
+                    b.Property<string>("QuestionsJson")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.Property<int?>("TimeTakenSeconds")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Topic")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("BehavioralSessions", (string)null);
+                });
+
             modelBuilder.Entity("InterviewSimulator.Persistence.Identity.AppRole", b =>
                 {
                     b.Property<Guid>("Id")
@@ -406,6 +448,10 @@ namespace InterviewSimulator.Persistence.Migrations
                     b.Property<Guid>("ResumeId")
                         .HasColumnType("uuid");
 
+                    b.Property<string>("SessionType")
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
                     b.Property<string>("ShareToken")
                         .HasColumnType("text");
 
@@ -553,6 +599,15 @@ namespace InterviewSimulator.Persistence.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("UserTokens", (string)null);
+                });
+
+            modelBuilder.Entity("InterviewSimulator.Persistence.Behavioral.AppBehavioralSession", b =>
+                {
+                    b.HasOne("InterviewSimulator.Persistence.Identity.AppUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("InterviewSimulator.Persistence.Identity.AppUserRole", b =>

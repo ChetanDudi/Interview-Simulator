@@ -4,7 +4,10 @@
       "Bash(dotnet user-secrets *)",
       "Bash(timeout 8 dotnet run)",
       "Bash(dotnet add *)",
-      "Bash(xargs cat)"
+      "Bash(xargs cat)",
+      "Bash(npm install *)",
+      "Bash(npx tsc *)",
+      "Bash(git add *)"
     ]
   }
 }

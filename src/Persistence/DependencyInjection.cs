@@ -1,4 +1,6 @@
+using InterviewSimulator.Application.Abstractions.Analytics;
 using InterviewSimulator.Application.Abstractions.Auth;
+using InterviewSimulator.Application.Abstractions.Behavioral;
 using InterviewSimulator.Application.Abstractions.Practice;
 using InterviewSimulator.Application.Abstractions.Resumes;
 using InterviewSimulator.Application.Abstractions.Sessions;
@@ -33,6 +35,8 @@ public static class DependencyInjection
         services.AddScoped<IResumeService,          ResumeService>();
         services.AddScoped<ISessionService,         SessionService>();
         services.AddScoped<IPracticeSessionService, PracticeSessionService>();
+        services.AddScoped<IAnalyticsService,       AnalyticsService>();
+        services.AddScoped<IBehavioralService,      BehavioralService>();
 
         return services;
     }

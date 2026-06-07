@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("InterviewSimulator.Persistence")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9a4428afe5033367d0b3264d7e885800f0dca64d")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1fd04b358827b3f56a258d44e50f3e0cd990db41")]
 [assembly: System.Reflection.AssemblyProductAttribute("InterviewSimulator.Persistence")]
 [assembly: System.Reflection.AssemblyTitleAttribute("InterviewSimulator.Persistence")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

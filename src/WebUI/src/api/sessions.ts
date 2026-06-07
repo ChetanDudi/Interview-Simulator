@@ -13,11 +13,22 @@ async function handleResponse<T>(res: Response): Promise<T> {
   return res.json() as Promise<T>
 }
 
-export async function createSession(resumeId: string, questionCount: number, token: string, targetRole?: string): Promise<SessionResponse> {
+export async function createSession(
+  resumeId: string,
+  questionCount: number,
+  token: string,
+  targetRole?: string,
+  sessionType?: string
+): Promise<SessionResponse> {
   const res = await fetch(BASE, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
-    body: JSON.stringify({ resumeId, questionCount, targetRole: targetRole?.trim() || undefined }),
+    body: JSON.stringify({
+      resumeId,
+      questionCount,
+      targetRole: targetRole?.trim() || undefined,
+      sessionType: sessionType || undefined,
+    }),
   })
   return handleResponse<SessionResponse>(res)
 }

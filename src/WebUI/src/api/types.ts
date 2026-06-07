@@ -156,3 +156,59 @@ export interface AttemptQuestion {
   correctOptionIndex?: number
   idealAnswer?: string
 }
+
+export interface ScorePoint {
+  date: string
+  score: number
+  label: string
+}
+
+export interface CategoryScore {
+  category: string
+  score: number
+}
+
+export interface AnalyticsResponse {
+  streak: number
+  totalInterviews: number
+  averageScore?: number
+  bestScore?: number
+  avgTechnical?: number
+  avgCommunication?: number
+  scoreHistory: ScorePoint[]
+  weakAreas: CategoryScore[]
+}
+
+export interface BehavioralQuestion {
+  id: string
+  questionText: string
+  starHint: string
+  category: string
+  answerText?: string
+}
+
+export interface BehavioralSessionResponse {
+  id: string
+  topic: string
+  status: string
+  createdAtUtc: string
+  timeTakenSeconds?: number
+  questions: BehavioralQuestion[]
+}
+
+export interface BehavioralFeedbackItem {
+  questionIndex: number
+  questionText: string
+  answerText: string
+  score: number
+  feedback: string
+  suggestion: string
+  idealAnswer: string
+  starAnalysis: string
+}
+
+export interface BehavioralReportResponse {
+  overallScore: number
+  summary: string
+  feedbacks: BehavioralFeedbackItem[]
+}

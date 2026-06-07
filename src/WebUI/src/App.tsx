@@ -17,10 +17,14 @@ import PracticeViewPage    from './pages/PracticeViewPage'
 import SharedPracticePage        from './pages/SharedPracticePage'
 import SharedInterviewPage       from './pages/SharedInterviewPage'
 import SharedInterviewAttemptPage from './pages/SharedInterviewAttemptPage'
-import ResumeReviewPage   from './pages/ResumeReviewPage'
-import JobMatchPage       from './pages/JobMatchPage'
-import CoverLetterPage    from './pages/CoverLetterPage'
-import ProtectedRoute      from './components/ProtectedRoute'
+import ResumeReviewPage       from './pages/ResumeReviewPage'
+import JobMatchPage           from './pages/JobMatchPage'
+import CoverLetterPage        from './pages/CoverLetterPage'
+import AnalyticsPage          from './pages/AnalyticsPage'
+import BehavioralPage         from './pages/BehavioralPage'
+import BehavioralInterviewPage from './pages/BehavioralInterviewPage'
+import BehavioralReportPage   from './pages/BehavioralReportPage'
+import ProtectedRoute          from './components/ProtectedRoute'
 
 function RootRedirect() {
   const { user, isLoading } = useAuth()
@@ -50,6 +54,10 @@ export default function App() {
         <Route path="/sessions"                    element={<ProtectedRoute><SessionsPage /></ProtectedRoute>} />
         <Route path="/practice"                    element={<ProtectedRoute><PracticePage /></ProtectedRoute>} />
         <Route path="/practice/:id"                element={<ProtectedRoute><PracticeViewPage /></ProtectedRoute>} />
+        <Route path="/analytics"           element={<ProtectedRoute><AnalyticsPage /></ProtectedRoute>} />
+        <Route path="/behavioral"          element={<ProtectedRoute><BehavioralPage /></ProtectedRoute>} />
+        <Route path="/behavioral/:id"      element={<ProtectedRoute><BehavioralInterviewPage /></ProtectedRoute>} />
+        <Route path="/behavioral/:id/report" element={<ProtectedRoute><BehavioralReportPage /></ProtectedRoute>} />
         <Route path="/shared/practice/:token"          element={<SharedPracticePage />} />
         <Route path="/shared/interview/:token/attempt" element={<SharedInterviewAttemptPage />} />
         <Route path="/shared/interview/:token"         element={<SharedInterviewPage />} />

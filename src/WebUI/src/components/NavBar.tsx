@@ -13,10 +13,12 @@ export default function NavBar() {
   return (
     <nav className="navbar">
       <div className="navbar-left">
-        <Link to="/home"    className="navbar-brand">Interview <span>Simulator</span></Link>
-        <Link to="/resumes"  className="navbar-link">Resumes</Link>
-        <Link to="/sessions"  className="navbar-link">History</Link>
-        <Link to="/practice"  className="navbar-link">Practice</Link>
+        <Link to="/home"       className="navbar-brand">Interview <span>Simulator</span></Link>
+        <Link to="/resumes"    className="navbar-link">Resumes</Link>
+        <Link to="/sessions"   className="navbar-link">History</Link>
+        <Link to="/practice"   className="navbar-link">Practice</Link>
+        <Link to="/behavioral" className="navbar-link">Behavioral</Link>
+        <Link to="/analytics"  className="navbar-link">Analytics</Link>
       </div>
       {user && (
         <div className="navbar-right">
