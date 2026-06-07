@@ -3,7 +3,8 @@
     "allow": [
       "Bash(dotnet user-secrets *)",
       "Bash(timeout 8 dotnet run)",
-      "Bash(dotnet add *)"
+      "Bash(dotnet add *)",
+      "Bash(xargs cat)"
     ]
   }
 }

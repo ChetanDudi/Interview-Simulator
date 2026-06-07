@@ -173,3 +173,5 @@ C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\UglyToad
 C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\UglyToad.PdfPig.Tokens.dll
 C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\UglyToad.PdfPig.dll
 C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\obj\Debug\net10.0\InterviewSimulator.API.sourcelink.json
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\DotNetEnv.dll
+C:\Users\CHETAN DUDI\OneDrive\Desktop\Project\src\API\bin\Debug\net10.0\Superpower.dll

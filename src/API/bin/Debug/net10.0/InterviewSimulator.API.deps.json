@@ -8,6 +8,7 @@
     ".NETCoreApp,Version=v10.0": {
       "InterviewSimulator.API/1.0.0": {
         "dependencies": {
+          "DotNetEnv": "3.2.0",
           "InterviewSimulator.Application": "1.0.0",
           "InterviewSimulator.Infrastructure": "1.0.0",
           "InterviewSimulator.Persistence": "1.0.0",
@@ -16,6 +17,17 @@
         },
         "runtime": {
           "InterviewSimulator.API.dll": {}
+        }
+      },
+      "DotNetEnv/3.2.0": {
+        "dependencies": {
+          "Superpower": "3.0.0"
+        },
+        "runtime": {
+          "lib/netstandard2.0/DotNetEnv.dll": {
+            "assemblyVersion": "3.2.0.0",
+            "fileVersion": "3.2.0.0"
+          }
         }
       },
       "Humanizer.Core/2.14.1": {
@@ -540,6 +552,14 @@
           }
         }
       },
+      "Superpower/3.0.0": {
+        "runtime": {
+          "lib/net5.0/Superpower.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "3.0.0.0"
+          }
+        }
+      },
       "System.ClientModel/1.10.0": {
         "dependencies": {
           "System.Memory.Data": "10.0.3"
@@ -693,6 +713,13 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
+    },
+    "DotNetEnv/3.2.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-2q+PD+aJcRW9QuRcIv4F8WbvEDxI6cwxzZJec2i45cBY4cAKCAoW4ZPkApJ7H82wr6Yfmxx/0kb1nLnRmZrGZA==",
+      "path": "dotnetenv/3.2.0",
+      "hashPath": "dotnetenv.3.2.0.nupkg.sha512"
     },
     "Humanizer.Core/2.14.1": {
       "type": "package",
@@ -882,6 +909,13 @@
       "sha512": "sha512-V2Anq0Yvyn3bGGG8WCQxqEAshG0KHIehB0QOotCz14vTkEk1PR3ErPOSmbnEsyOewhdF3G5XpQHywK2L50Xu+A==",
       "path": "pdfpig/0.1.14",
       "hashPath": "pdfpig.0.1.14.nupkg.sha512"
+    },
+    "Superpower/3.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-bjKbAYWePooCAvPxQq+3KnmcLfRggMyRoXmtBMlmCG71bdwBHrO6rmRJ2DRIodg5aztNcxeZXBUVWT+H+MZUhw==",
+      "path": "superpower/3.0.0",
+      "hashPath": "superpower.3.0.0.nupkg.sha512"
     },
     "System.ClientModel/1.10.0": {
       "type": "package",
