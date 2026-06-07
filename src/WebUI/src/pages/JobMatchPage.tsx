@@ -11,6 +11,20 @@ function matchColor(pct: number) {
   return '#ef4444'
 }
 
+function MatchRing({ pct }: { pct: number }) {
+  const color = matchColor(pct)
+  const r = 44, circ = 2 * Math.PI * r, fill = (pct / 100) * circ
+  return (
+    <svg width="110" height="110" viewBox="0 0 110 110" style={{ flexShrink: 0 }}>
+      <circle cx="55" cy="55" r={r} fill="none" stroke="#1e2235" strokeWidth="10" />
+      <circle cx="55" cy="55" r={r} fill="none" stroke={color} strokeWidth="10"
+        strokeDasharray={`${fill} ${circ}`} strokeLinecap="round" transform="rotate(-90 55 55)" />
+      <text x="55" y="51" textAnchor="middle" fill={color} fontSize="22" fontWeight="800">{pct}%</text>
+      <text x="55" y="68" textAnchor="middle" fill="#64748b" fontSize="11" fontWeight="600">MATCH</text>
+    </svg>
+  )
+}
+
 export default function JobMatchPage() {
   const { id }    = useParams<{ id: string }>()
   const { token } = useAuth()
@@ -24,8 +38,7 @@ export default function JobMatchPage() {
     if (!id || !token || !jd.trim()) return
     setLoading(true); setError(''); setResult(null)
     try {
-      const r = await matchJob(id, jd.trim(), token)
-      setResult(r)
+      setResult(await matchJob(id, jd.trim(), token))
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to match.')
     } finally {
@@ -38,98 +51,98 @@ export default function JobMatchPage() {
       <NavBar />
       <main className="report-main">
         <div className="report-header">
-          <Link to="/resumes" className="btn btn-ghost btn-sm" style={{ marginBottom: 12 }}>← Back</Link>
+          <Link to="/resumes" className="btn btn-ghost btn-sm" style={{ marginBottom: 12 }}>← Back to Resumes</Link>
           <h1 className="page-title">Job Description Match</h1>
           <p className="page-sub">See how well your resume matches a specific role</p>
         </div>
 
-        <form onSubmit={handleSubmit} style={{ marginBottom: 28 }}>
-          <label className="form-label">Paste the Job Description</label>
-          <textarea
-            className="form-input"
-            style={{ minHeight: 160, resize: 'vertical', fontFamily: 'inherit' }}
-            value={jd}
-            onChange={e => setJd(e.target.value)}
-            placeholder="Paste the full job description here…"
-            required
-          />
-          {error && <p className="form-error" style={{ marginTop: 8 }}>{error}</p>}
-          <button className="btn btn-primary" type="submit" disabled={loading} style={{ marginTop: 12 }}>
-            {loading ? <><span className="spinner-sm" /> Analysing…</> : '🎯 Analyse Match'}
-          </button>
-        </form>
+        <div className="practice-card" style={{ marginBottom: 28 }}>
+          <form onSubmit={handleSubmit}>
+            <label className="form-label" style={{ fontSize: '0.9rem' }}>Paste the Job Description</label>
+            <textarea
+              className="form-input"
+              style={{ minHeight: 180, resize: 'vertical', fontFamily: 'inherit', marginBottom: 12 }}
+              value={jd}
+              onChange={e => setJd(e.target.value)}
+              placeholder="Paste the full job description here — the more detail the better…"
+              required
+            />
+            {error && <p className="form-error" style={{ marginBottom: 12 }}>{error}</p>}
+            <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
+              <button className="btn btn-primary" type="submit" disabled={loading}>
+                {loading ? <><span className="spinner-sm" />Analysing match…</> : '🎯 Analyse Match'}
+              </button>
+              {loading && <span style={{ color: 'var(--text-muted)', fontSize: '0.82rem' }}>This may take 10–20 seconds</span>}
+            </div>
+          </form>
+        </div>
 
         {result && (
           <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 20, marginBottom: 24 }}>
-              <div style={{ position: 'relative', width: 100, height: 100 }}>
-                {(() => {
-                  const r = 40, circ = 2 * Math.PI * r
-                  const fill = (result.matchPercentage / 100) * circ
-                  const color = matchColor(result.matchPercentage)
-                  return (
-                    <svg width="100" height="100" viewBox="0 0 100 100">
-                      <circle cx="50" cy="50" r={r} fill="none" stroke="#1e2235" strokeWidth="10" />
-                      <circle cx="50" cy="50" r={r} fill="none" stroke={color} strokeWidth="10"
-                        strokeDasharray={`${fill} ${circ}`} strokeLinecap="round" transform="rotate(-90 50 50)" />
-                      <text x="50" y="54" textAnchor="middle" fill={color} fontSize="18" fontWeight="700">{result.matchPercentage}%</text>
-                    </svg>
-                  )
-                })()}
-              </div>
-              <div>
-                <p style={{ color: 'var(--text-primary)', fontWeight: 600, fontSize: '1.1rem', marginBottom: 6 }}>Match Score</p>
-                <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', maxWidth: 480 }}>{result.summary}</p>
+            {/* Score header */}
+            <div className="practice-card" style={{ display: 'flex', alignItems: 'center', gap: 28, marginBottom: 20 }}>
+              <MatchRing pct={result.matchPercentage} />
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <p style={{ color: 'var(--text-muted)', fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: 6 }}>Overall Match</p>
+                <p style={{ color: '#fff', fontWeight: 700, fontSize: '1.2rem', marginBottom: 8 }}>
+                  {result.matchPercentage >= 70 ? '🟢 Strong match' : result.matchPercentage >= 40 ? '🟡 Moderate match' : '🔴 Weak match'}
+                </p>
+                <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', lineHeight: 1.6 }}>{result.summary}</p>
               </div>
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 16 }}>
+            {/* Keywords grid */}
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14, marginBottom: 14 }}>
               <div className="practice-card">
-                <h3 style={{ color: '#10b981', marginBottom: 12, fontSize: '0.95rem' }}>✅ Present Keywords ({result.presentKeywords.length})</h3>
+                <h3 style={{ color: '#10b981', marginBottom: 12, fontSize: '0.88rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+                  ✅ Present Keywords <span style={{ fontWeight: 400, color: 'var(--text-muted)' }}>({result.presentKeywords.length})</span>
+                </h3>
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
                   {result.presentKeywords.map((k, i) => (
-                    <span key={i} style={{ background: '#10b98122', color: '#10b981', padding: '2px 10px', borderRadius: 20, fontSize: '0.8rem' }}>{k}</span>
+                    <span key={i} style={{ background: 'rgba(16,185,129,0.12)', color: '#10b981', padding: '3px 10px', borderRadius: 20, fontSize: '0.78rem', fontWeight: 500 }}>{k}</span>
                   ))}
                 </div>
               </div>
               <div className="practice-card">
-                <h3 style={{ color: '#ef4444', marginBottom: 12, fontSize: '0.95rem' }}>❌ Missing Keywords ({result.missingKeywords.length})</h3>
+                <h3 style={{ color: '#ef4444', marginBottom: 12, fontSize: '0.88rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+                  ❌ Missing Keywords <span style={{ fontWeight: 400, color: 'var(--text-muted)' }}>({result.missingKeywords.length})</span>
+                </h3>
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
                   {result.missingKeywords.map((k, i) => (
-                    <span key={i} style={{ background: '#ef444422', color: '#ef4444', padding: '2px 10px', borderRadius: 20, fontSize: '0.8rem' }}>{k}</span>
+                    <span key={i} style={{ background: 'rgba(239,68,68,0.12)', color: '#ef4444', padding: '3px 10px', borderRadius: 20, fontSize: '0.78rem', fontWeight: 500 }}>{k}</span>
                   ))}
                 </div>
               </div>
             </div>
 
             {result.highlights.length > 0 && (
-              <div className="practice-card" style={{ marginBottom: 12 }}>
-                <h3 style={{ color: '#f59e0b', marginBottom: 10, fontSize: '0.95rem' }}>🌟 Highlights</h3>
-                <ul style={{ margin: 0, paddingLeft: 18, color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
+              <div className="practice-card" style={{ marginBottom: 14 }}>
+                <h3 style={{ color: '#f59e0b', marginBottom: 10, fontSize: '0.88rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.04em' }}>🌟 Highlights</h3>
+                <ul style={{ margin: 0, paddingLeft: 20, color: 'var(--text-secondary)', fontSize: '0.9rem', lineHeight: 1.65 }}>
                   {result.highlights.map((h, i) => <li key={i} style={{ marginBottom: 5 }}>{h}</li>)}
                 </ul>
               </div>
             )}
 
             {result.gapAnalysis.length > 0 && (
-              <div className="practice-card" style={{ marginBottom: 12 }}>
-                <h3 style={{ color: '#a78bfa', marginBottom: 10, fontSize: '0.95rem' }}>🔍 Gap Analysis</h3>
-                <ul style={{ margin: 0, paddingLeft: 18, color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
+              <div className="practice-card" style={{ marginBottom: 14 }}>
+                <h3 style={{ color: '#a78bfa', marginBottom: 10, fontSize: '0.88rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.04em' }}>🔍 Gap Analysis</h3>
+                <ul style={{ margin: 0, paddingLeft: 20, color: 'var(--text-secondary)', fontSize: '0.9rem', lineHeight: 1.65 }}>
                   {result.gapAnalysis.map((g, i) => <li key={i} style={{ marginBottom: 5 }}>{g}</li>)}
                 </ul>
               </div>
             )}
 
             {result.recommendations.length > 0 && (
-              <div className="practice-card">
-                <h3 style={{ color: '#38bdf8', marginBottom: 10, fontSize: '0.95rem' }}>💡 Recommendations</h3>
-                <ul style={{ margin: 0, paddingLeft: 18, color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
+              <div className="practice-card" style={{ marginBottom: 24 }}>
+                <h3 style={{ color: '#38bdf8', marginBottom: 10, fontSize: '0.88rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.04em' }}>💡 Recommendations</h3>
+                <ul style={{ margin: 0, paddingLeft: 20, color: 'var(--text-secondary)', fontSize: '0.9rem', lineHeight: 1.65 }}>
                   {result.recommendations.map((r, i) => <li key={i} style={{ marginBottom: 5 }}>{r}</li>)}
                 </ul>
               </div>
             )}
 
-            <div style={{ marginTop: 24, display: 'flex', gap: 12 }}>
+            <div style={{ display: 'flex', gap: 12 }}>
               <Link to={`/resumes/${id}/cover-letter`} className="btn btn-primary">✉ Generate Cover Letter</Link>
               <Link to={`/resumes/${id}/review`}       className="btn btn-outline">📋 Full Resume Review</Link>
             </div>

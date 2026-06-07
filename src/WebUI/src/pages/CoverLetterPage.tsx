@@ -18,8 +18,7 @@ export default function CoverLetterPage() {
     if (!id || !token || !jd.trim()) return
     setLoading(true); setError(''); setLetter('')
     try {
-      const text = await generateCoverLetter(id, jd.trim(), token)
-      setLetter(text)
+      setLetter(await generateCoverLetter(id, jd.trim(), token))
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to generate cover letter.')
     } finally {
@@ -30,7 +29,7 @@ export default function CoverLetterPage() {
   function handleCopy() {
     navigator.clipboard.writeText(letter).then(() => {
       setCopied(true)
-      setTimeout(() => setCopied(false), 2000)
+      setTimeout(() => setCopied(false), 2200)
     })
   }
 
@@ -39,55 +38,64 @@ export default function CoverLetterPage() {
       <NavBar />
       <main className="report-main">
         <div className="report-header">
-          <Link to="/resumes" className="btn btn-ghost btn-sm" style={{ marginBottom: 12 }}>← Back</Link>
+          <Link to="/resumes" className="btn btn-ghost btn-sm" style={{ marginBottom: 12 }}>← Back to Resumes</Link>
           <h1 className="page-title">Cover Letter Generator</h1>
-          <p className="page-sub">Generate a tailored cover letter based on your resume and a job description</p>
+          <p className="page-sub">AI writes a tailored cover letter from your resume + job description</p>
         </div>
 
-        <form onSubmit={handleSubmit} style={{ marginBottom: 28 }}>
-          <label className="form-label">Paste the Job Description</label>
-          <textarea
-            className="form-input"
-            style={{ minHeight: 140, resize: 'vertical', fontFamily: 'inherit' }}
-            value={jd}
-            onChange={e => setJd(e.target.value)}
-            placeholder="Paste the full job description here…"
-            required
-          />
-          {error && <p className="form-error" style={{ marginTop: 8 }}>{error}</p>}
-          <button className="btn btn-primary" type="submit" disabled={loading} style={{ marginTop: 12 }}>
-            {loading ? <><span className="spinner-sm" /> Generating…</> : '✉ Generate Cover Letter'}
-          </button>
-        </form>
+        <div className="practice-card" style={{ marginBottom: 28 }}>
+          <form onSubmit={handleSubmit}>
+            <label className="form-label" style={{ fontSize: '0.9rem' }}>Paste the Job Description</label>
+            <textarea
+              className="form-input"
+              style={{ minHeight: 160, resize: 'vertical', fontFamily: 'inherit', marginBottom: 12 }}
+              value={jd}
+              onChange={e => setJd(e.target.value)}
+              placeholder="Paste the full job description here — the more detail, the better the letter…"
+              required
+            />
+            {error && <p className="form-error" style={{ marginBottom: 12 }}>{error}</p>}
+            <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
+              <button className="btn btn-primary" type="submit" disabled={loading}>
+                {loading ? <><span className="spinner-sm" />Generating…</> : '✉ Generate Cover Letter'}
+              </button>
+              {loading && <span style={{ color: 'var(--text-muted)', fontSize: '0.82rem' }}>This may take 15–30 seconds</span>}
+            </div>
+          </form>
+        </div>
 
         {letter && (
           <div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
-              <h2 style={{ color: 'var(--text-primary)', margin: 0 }}>Your Cover Letter</h2>
-              <button className="btn btn-outline btn-sm" onClick={handleCopy}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 14 }}>
+              <h2 style={{ color: '#fff', margin: 0, fontWeight: 700 }}>Your Cover Letter</h2>
+              <button className="btn btn-outline btn-sm" onClick={handleCopy} style={{ minWidth: 110 }}>
                 {copied ? '✅ Copied!' : '📋 Copy'}
               </button>
             </div>
+
             <div
               style={{
-                background: '#0f1526',
+                background: '#0d1423',
                 border: '1px solid #1e2a45',
-                borderRadius: 10,
-                padding: '24px 28px',
-                color: 'var(--text-primary)',
-                fontSize: '0.95rem',
-                lineHeight: 1.75,
+                borderRadius: 12,
+                padding: '28px 32px',
+                color: '#e2e8f0',
+                fontSize: '0.97rem',
+                lineHeight: 1.8,
                 whiteSpace: 'pre-wrap',
-                fontFamily: 'Georgia, serif',
+                fontFamily: 'Georgia, "Times New Roman", serif',
+                marginBottom: 20,
               }}
             >
               {letter}
             </div>
-            <div style={{ marginTop: 20, display: 'flex', gap: 12 }}>
-              <button className="btn btn-ghost" onClick={handleCopy}>
+
+            <div style={{ display: 'flex', gap: 12 }}>
+              <button className="btn btn-primary" onClick={handleCopy}>
                 {copied ? '✅ Copied to Clipboard' : '📋 Copy to Clipboard'}
               </button>
               <Link to={`/resumes/${id}/job-match`} className="btn btn-outline">🎯 Job Match Analysis</Link>
+              <Link to={`/resumes/${id}/review`}    className="btn btn-ghost">📋 Resume Review</Link>
             </div>
           </div>
         )}

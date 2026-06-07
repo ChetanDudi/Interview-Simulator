@@ -127,53 +127,58 @@ export default function ResumePage() {
             <h2>Uploaded Resumes</h2>
             {resumes.map(r => (
               <div key={r.id} className="resume-item">
-                <span className="resume-icon">📄</span>
-                <div className="resume-info">
-                  <div className="resume-name">{r.originalFileName}</div>
-                  <div className="resume-meta">{formatBytes(r.fileSizeBytes)} · {formatDate(r.uploadedAtUtc)}</div>
-                  {r.interviewCount > 0 && (
-                    <div className="resume-stats">
-                      <span className="resume-stat-pill">📊 {r.interviewCount} interview{r.interviewCount !== 1 ? 's' : ''}</span>
-                      {r.averageScore != null && (
-                        <span className="resume-stat-pill" style={{ color: r.averageScore >= 70 ? '#10b981' : r.averageScore >= 50 ? '#f59e0b' : '#ef4444' }}>
-                          Avg {Math.round(r.averageScore)}/100
-                        </span>
-                      )}
-                      {r.bestScore != null && (
-                        <span className="resume-stat-pill">Best {r.bestScore}/100</span>
-                      )}
-                    </div>
-                  )}
+                {/* Row 1: icon + info + status badge */}
+                <div className="resume-item-top">
+                  <span className="resume-icon">📄</span>
+                  <div className="resume-info">
+                    <div className="resume-name">{r.originalFileName}</div>
+                    <div className="resume-meta">{formatBytes(r.fileSizeBytes)} · {formatDate(r.uploadedAtUtc)}</div>
+                    {r.interviewCount > 0 && (
+                      <div className="resume-stats">
+                        <span className="resume-stat-pill">📊 {r.interviewCount} interview{r.interviewCount !== 1 ? 's' : ''}</span>
+                        {r.averageScore != null && (
+                          <span className="resume-stat-pill" style={{ color: r.averageScore >= 70 ? '#10b981' : r.averageScore >= 50 ? '#f59e0b' : '#ef4444' }}>
+                            Avg {Math.round(r.averageScore)}/100
+                          </span>
+                        )}
+                        {r.bestScore != null && (
+                          <span className="resume-stat-pill">Best {r.bestScore}/100</span>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                  <span className={`resume-badge${r.status === 'Ready' ? ' badge--ready' : r.status === 'TextExtractionFailed' ? ' badge--warn' : ''}`}>
+                    {r.status === 'Ready' ? '✓ Ready' : r.status === 'TextExtractionFailed' ? '⚠ No text' : r.status}
+                  </span>
                 </div>
-                <span className={`resume-badge${r.status === 'Ready' ? ' badge--ready' : r.status === 'TextExtractionFailed' ? ' badge--warn' : ''}`}>
-                  {r.status === 'Ready' ? '✓ Ready' : r.status === 'TextExtractionFailed' ? '⚠ No text' : r.status}
-                </span>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, alignItems: 'center' }}>
+
+                {/* Row 2: action buttons */}
+                <div className="resume-item-actions">
                   <button
                     className="btn btn-primary btn-sm"
                     disabled={r.status !== 'Ready'}
                     onClick={() => openPicker(r.id, 'text')}
-                    title={r.status !== 'Ready' ? 'Text extraction failed — cannot generate questions' : 'Type or speak your answers'}
+                    title={r.status !== 'Ready' ? 'Text extraction failed — cannot generate questions' : 'Start text interview'}
                   >
-                    📝 Text
+                    📝 Text Interview
                   </button>
                   <button
                     className="btn btn-voice btn-sm"
                     disabled={r.status !== 'Ready'}
                     onClick={() => openPicker(r.id, 'voice')}
-                    title={r.status !== 'Ready' ? 'Text extraction failed — cannot generate questions' : 'Voice-only interview — AI reads questions aloud'}
+                    title={r.status !== 'Ready' ? 'Text extraction failed — cannot generate questions' : 'Start voice interview'}
                   >
-                    🎙 Voice
+                    🎙 Voice Interview
                   </button>
                   {r.status === 'Ready' && (
                     <>
-                      <Link to={`/resumes/${r.id}/review`}       className="btn btn-outline btn-sm" title="AI Resume Review">📋 Review</Link>
-                      <Link to={`/resumes/${r.id}/job-match`}    className="btn btn-outline btn-sm" title="Match a Job Description">🎯 Job Match</Link>
-                      <Link to={`/resumes/${r.id}/cover-letter`} className="btn btn-outline btn-sm" title="Generate Cover Letter">✉ Cover Letter</Link>
+                      <Link to={`/resumes/${r.id}/review`}       className="btn btn-outline btn-sm">📋 AI Review</Link>
+                      <Link to={`/resumes/${r.id}/job-match`}    className="btn btn-outline btn-sm">🎯 Job Match</Link>
+                      <Link to={`/resumes/${r.id}/cover-letter`} className="btn btn-outline btn-sm">✉ Cover Letter</Link>
                     </>
                   )}
                   <button className="btn btn-danger btn-sm" onClick={() => handleDelete(r.id)} disabled={deletingId === r.id}>
-                    {deletingId === r.id ? '…' : 'Delete'}
+                    {deletingId === r.id ? '…' : '🗑 Delete'}
                   </button>
                 </div>
               </div>

@@ -104,8 +104,9 @@ export default function ResumeReviewPage() {
           <p className="page-sub">AI-powered analysis of your resume</p>
         </div>
 
-        <div className="score-rings">
-          <ScoreRing score={review.overallScore} label="Overall" />
+        {/* Score rings inside a card */}
+        <div className="practice-card" style={{ display: 'flex', justifyContent: 'center', gap: 60, marginBottom: 24, flexWrap: 'wrap' }}>
+          <ScoreRing score={review.overallScore} label="Overall Score" />
           <ScoreRing score={review.atsScore}     label="ATS Score" />
         </div>
 
@@ -114,37 +115,38 @@ export default function ResumeReviewPage() {
           <p>{review.summary}</p>
         </div>
 
-        <h2 style={{ color: 'var(--text-primary)', marginBottom: 16 }}>Section Analysis</h2>
+        <h3 style={{ color: 'var(--text-muted)', fontSize: '0.78rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: 12 }}>Section Analysis</h3>
         <SectionCard title="Professional Summary"  section={review.summarySection} />
         <SectionCard title="Work Experience"       section={review.experienceSection} />
         <SectionCard title="Skills"                section={review.skillsSection} />
         <SectionCard title="Education"             section={review.educationSection} />
 
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginTop: 24 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14, marginTop: 14 }}>
           <div className="practice-card">
-            <h3 style={{ color: '#10b981', marginBottom: 12, fontSize: '1rem' }}>✅ Top Strengths</h3>
-            <ul style={{ margin: 0, paddingLeft: 18, color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
+            <h3 style={{ color: '#10b981', marginBottom: 12, fontSize: '0.88rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.04em' }}>✅ Top Strengths</h3>
+            <ul style={{ margin: 0, paddingLeft: 20, color: 'var(--text-secondary)', fontSize: '0.9rem', lineHeight: 1.65 }}>
               {review.topStrengths.map((s, i) => <li key={i} style={{ marginBottom: 6 }}>{s}</li>)}
             </ul>
           </div>
           <div className="practice-card">
-            <h3 style={{ color: '#ef4444', marginBottom: 12, fontSize: '1rem' }}>⚠ Critical Gaps</h3>
-            <ul style={{ margin: 0, paddingLeft: 18, color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
+            <h3 style={{ color: '#ef4444', marginBottom: 12, fontSize: '0.88rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.04em' }}>⚠ Critical Gaps</h3>
+            <ul style={{ margin: 0, paddingLeft: 20, color: 'var(--text-secondary)', fontSize: '0.9rem', lineHeight: 1.65 }}>
               {review.criticalGaps.map((g, i) => <li key={i} style={{ marginBottom: 6 }}>{g}</li>)}
             </ul>
           </div>
         </div>
 
-        <div className="practice-card" style={{ marginTop: 16 }}>
-          <h3 style={{ color: '#f59e0b', marginBottom: 12, fontSize: '1rem' }}>🤖 ATS Optimisation Tips</h3>
-          <ul style={{ margin: 0, paddingLeft: 18, color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
+        <div className="practice-card" style={{ marginTop: 14 }}>
+          <h3 style={{ color: '#f59e0b', marginBottom: 12, fontSize: '0.88rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.04em' }}>🤖 ATS Optimisation Tips</h3>
+          <ul style={{ margin: 0, paddingLeft: 20, color: 'var(--text-secondary)', fontSize: '0.9rem', lineHeight: 1.65 }}>
             {review.atsTips.map((t, i) => <li key={i} style={{ marginBottom: 6 }}>{t}</li>)}
           </ul>
         </div>
 
-        <div style={{ marginTop: 32, display: 'flex', gap: 12 }}>
+        <div style={{ marginTop: 28, display: 'flex', gap: 12 }}>
           <Link to={`/resumes/${id}/job-match`}    className="btn btn-primary">🎯 Match a Job Description</Link>
           <Link to={`/resumes/${id}/cover-letter`} className="btn btn-outline">✉ Generate Cover Letter</Link>
+          <Link to="/resumes"                       className="btn btn-ghost">← Back to Resumes</Link>
         </div>
 
       </main>
