@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import NavBar from '../components/NavBar'
 import { useAuth } from '../context/AuthContext'
-import { getSession, submitAnswers } from '../api/sessions'
+import { getSession, submitAnswers, shareSession } from '../api/sessions'
 import type { QuestionResponse } from '../api/types'
 
 interface ISpeechRecognition extends EventTarget {
@@ -69,6 +69,9 @@ export default function InterviewPage() {
   const [listening,      setListening]     = useState(false)
   const [interimText,    setInterimText]   = useState('')
   const [voiceSupported, setVoiceSupported] = useState(false)
+  const [shareToken,     setShareToken]    = useState<string | undefined>()
+  const [sharing,        setSharing]       = useState(false)
+  const [shareCopied,    setShareCopied]   = useState(false)
 
   const recognitionRef  = useRef<ISpeechRecognition | null>(null)
   const baseAnswerRef   = useRef('')
@@ -113,6 +116,26 @@ export default function InterviewPage() {
     if (flags[q.id] === 'review') return 'review'
     if (answers[q.id]?.trim()) return 'answered'
     return 'unanswered'
+  }
+
+  // ── Share ─────────────────────────────────────────────────────────────────
+
+  async function handleShare() {
+    if (!id || !token) return
+    setSharing(true)
+    try {
+      let t = shareToken
+      if (!t) {
+        const res = await shareSession(id, token)
+        t = res.token
+        setShareToken(t)
+      }
+      const url = `${window.location.origin}/shared/interview/${t}/attempt`
+      await navigator.clipboard.writeText(url)
+      setShareCopied(true)
+      setTimeout(() => setShareCopied(false), 2500)
+    } catch { /* ignore */ }
+    finally { setSharing(false) }
   }
 
   // ── Voice ─────────────────────────────────────────────────────────────────
@@ -215,6 +238,9 @@ export default function InterviewPage() {
         <div className="interview-header">
           <span className="interview-step">Question {currentIndex + 1} of {total}</span>
           <span className="interview-timer">⏱ {formatTime(elapsed)}</span>
+          <button className="btn btn-ghost btn-sm" onClick={handleShare} disabled={sharing} title="Share interview questions">
+            {shareCopied ? '✓ Copied!' : sharing ? '…' : '🔗 Share'}
+          </button>
           <div className="interview-badges">
             {/* Question type badge */}
             <span className="badge-pill" style={{

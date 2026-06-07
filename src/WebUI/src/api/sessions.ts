@@ -1,4 +1,4 @@
-import type { ReportResponse, SessionResponse } from './types'
+import type { ReportResponse, SessionResponse, InterviewAttemptResponse } from './types'
 
 import { apiBase } from './config'
 
@@ -68,4 +68,9 @@ export async function shareSession(sessionId: string, token: string): Promise<{ 
 export async function getSharedInterview(shareToken: string): Promise<ReportResponse> {
   const res = await fetch(`${apiBase}/api/public/interview/${shareToken}`)
   return handleResponse<ReportResponse>(res)
+}
+
+export async function getSharedInterviewAttempt(shareToken: string): Promise<InterviewAttemptResponse> {
+  const res = await fetch(`${apiBase}/api/public/interview/${shareToken}/attempt`)
+  return handleResponse<InterviewAttemptResponse>(res)
 }

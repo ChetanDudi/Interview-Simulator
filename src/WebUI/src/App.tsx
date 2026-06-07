@@ -14,8 +14,9 @@ import ReportPage         from './pages/ReportPage'
 import SessionsPage        from './pages/SessionsPage'
 import PracticePage        from './pages/PracticePage'
 import PracticeViewPage    from './pages/PracticeViewPage'
-import SharedPracticePage  from './pages/SharedPracticePage'
-import SharedInterviewPage from './pages/SharedInterviewPage'
+import SharedPracticePage        from './pages/SharedPracticePage'
+import SharedInterviewPage       from './pages/SharedInterviewPage'
+import SharedInterviewAttemptPage from './pages/SharedInterviewAttemptPage'
 import ProtectedRoute      from './components/ProtectedRoute'
 
 function RootRedirect() {
@@ -43,8 +44,9 @@ export default function App() {
         <Route path="/sessions"                    element={<ProtectedRoute><SessionsPage /></ProtectedRoute>} />
         <Route path="/practice"                    element={<ProtectedRoute><PracticePage /></ProtectedRoute>} />
         <Route path="/practice/:id"                element={<ProtectedRoute><PracticeViewPage /></ProtectedRoute>} />
-        <Route path="/shared/practice/:token"      element={<SharedPracticePage />} />
-        <Route path="/shared/interview/:token"     element={<SharedInterviewPage />} />
+        <Route path="/shared/practice/:token"          element={<SharedPracticePage />} />
+        <Route path="/shared/interview/:token/attempt" element={<SharedInterviewAttemptPage />} />
+        <Route path="/shared/interview/:token"         element={<SharedInterviewPage />} />
         <Route path="*"                            element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>

@@ -247,7 +247,44 @@ public sealed class SessionService(
             .Where(a => a.SessionId == session.Id)
             .ToDictionaryAsync(a => a.QuestionId, a => a.AnswerText, cancellationToken);
 
+
         return BuildReportResponse(session, answers);
+    }
+
+    public async Task<InterviewAttemptResponse?> GetQuestionsForAttemptByShareTokenAsync(string token, CancellationToken cancellationToken = default)
+    {
+        var session = await dbContext.Sessions
+            .Include(s => s.Questions)
+            .Include(s => s.FeedbackReport)
+                .ThenInclude(r => r!.QuestionFeedbacks)
+            .FirstOrDefaultAsync(s => s.ShareToken == token, cancellationToken);
+
+        if (session is null) return null;
+
+        var resume = await dbContext.Resumes.FindAsync([session.ResumeId], cancellationToken);
+
+        var idealAnswers = session.FeedbackReport?.QuestionFeedbacks
+            .ToDictionary(f => f.QuestionId, f => f.IdealAnswer)
+            ?? [];
+
+        return new InterviewAttemptResponse
+        {
+            SessionId       = session.Id,
+            ResumeTitle     = resume?.OriginalFileName ?? "Interview",
+            CreatedAtUtc    = session.CreatedAtUtc,
+            HasModelAnswers = session.FeedbackReport is not null,
+            Questions       = session.Questions
+                .OrderBy(q => q.OrderIndex)
+                .Select(q => new AttemptQuestion
+                {
+                    QuestionText       = q.QuestionText,
+                    QuestionType       = q.QuestionType,
+                    Options            = DeserializeOptions(q.OptionsJson),
+                    CorrectOptionIndex = q.CorrectOptionIndex,
+                    IdealAnswer        = idealAnswers.GetValueOrDefault(q.Id)
+                })
+                .ToArray()
+        };
     }
 
     // ── Private Helpers ───────────────────────────────────────────────────────

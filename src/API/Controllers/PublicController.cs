@@ -25,4 +25,11 @@ public sealed class PublicController(
         var session = await practiceSessionService.GetByShareTokenAsync(token, cancellationToken);
         return session is null ? NotFound() : Ok(session);
     }
+
+    [HttpGet("interview/{token}/attempt")]
+    public async Task<IActionResult> GetSharedInterviewAttempt(string token, CancellationToken cancellationToken)
+    {
+        var attempt = await sessionService.GetQuestionsForAttemptByShareTokenAsync(token, cancellationToken);
+        return attempt is null ? NotFound() : Ok(attempt);
+    }
 }

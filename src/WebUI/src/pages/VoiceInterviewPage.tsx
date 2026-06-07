@@ -2,7 +2,7 @@ import { useEffect, useRef, useState, useCallback } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import NavBar from '../components/NavBar'
 import { useAuth } from '../context/AuthContext'
-import { getSession, submitAnswers } from '../api/sessions'
+import { getSession, submitAnswers, shareSession } from '../api/sessions'
 import type { QuestionResponse } from '../api/types'
 
 interface ISpeechRecognition extends EventTarget {
@@ -36,6 +36,9 @@ export default function VoiceInterviewPage() {
   const [phase,        setPhase]        = useState<Phase>('loading')
   const [transcript,   setTranscript]   = useState('')
   const [error,        setError]        = useState('')
+  const [shareToken,   setShareToken]   = useState<string | undefined>()
+  const [sharing,      setSharing]      = useState(false)
+  const [shareCopied,  setShareCopied]  = useState(false)
 
   const recognitionRef   = useRef<ISpeechRecognition | null>(null)
   const finalTextRef     = useRef('')
@@ -70,6 +73,26 @@ export default function VoiceInterviewPage() {
       .catch(() => { setError('Failed to load session.'); setPhase('done') })
     return () => { if (timerIntervalRef.current) clearInterval(timerIntervalRef.current) }
   }, [id, token])
+
+  // ── Share ─────────────────────────────────────────────────────────────────
+
+  async function handleShare() {
+    if (!id || !token) return
+    setSharing(true)
+    try {
+      let t = shareToken
+      if (!t) {
+        const res = await shareSession(id, token)
+        t = res.token
+        setShareToken(t)
+      }
+      const url = `${window.location.origin}/shared/interview/${t}/attempt`
+      await navigator.clipboard.writeText(url)
+      setShareCopied(true)
+      setTimeout(() => setShareCopied(false), 2500)
+    } catch { /* ignore */ }
+    finally { setSharing(false) }
+  }
 
   // ── TTS ───────────────────────────────────────────────────────────────────
 
@@ -207,6 +230,9 @@ export default function VoiceInterviewPage() {
         <div className="vi-step-row">
           <p className="vi-step">Question {currentIndex + 1} of {total}</p>
           <span className="interview-timer">⏱ {formatTime(elapsed)}</span>
+          <button className="btn btn-ghost btn-sm" onClick={handleShare} disabled={sharing} title="Share interview questions">
+            {shareCopied ? '✓ Copied!' : sharing ? '…' : '🔗 Share'}
+          </button>
         </div>
 
         <div className="vi-question-card">

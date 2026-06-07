@@ -106,3 +106,19 @@ export interface PracticeQuestion {
   options: string[]
   correctOptionIndex?: number
 }
+
+export interface InterviewAttemptResponse {
+  sessionId: string
+  resumeTitle: string
+  createdAtUtc: string
+  hasModelAnswers: boolean
+  questions: AttemptQuestion[]
+}
+
+export interface AttemptQuestion {
+  questionText: string
+  questionType: 'MCQ' | 'ShortAnswer' | 'LongAnswer' | 'Coding' | 'Other'
+  options: string[]
+  correctOptionIndex?: number
+  idealAnswer?: string
+}

@@ -12,4 +12,5 @@ public interface ISessionService
     Task<ReportResponse?>                 GetReportAsync(Guid userId, Guid sessionId, CancellationToken cancellationToken = default);
     Task<string>                          GenerateShareTokenAsync(Guid userId, Guid sessionId, CancellationToken cancellationToken = default);
     Task<ReportResponse?>                 GetReportByShareTokenAsync(string token, CancellationToken cancellationToken = default);
+    Task<InterviewAttemptResponse?>       GetQuestionsForAttemptByShareTokenAsync(string token, CancellationToken cancellationToken = default);
 }

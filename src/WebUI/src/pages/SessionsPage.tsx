@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import NavBar from '../components/NavBar'
 import { useAuth } from '../context/AuthContext'
-import { getMySessions } from '../api/sessions'
+import { getMySessions, shareSession } from '../api/sessions'
 import type { SessionResponse } from '../api/types'
 
 function formatDate(iso: string) {
@@ -27,9 +27,28 @@ function formatTimeTaken(seconds: number): string {
 
 export default function SessionsPage() {
   const { token } = useAuth()
-  const [sessions, setSessions] = useState<SessionResponse[]>([])
-  const [loading,  setLoading]  = useState(true)
-  const [error,    setError]    = useState('')
+  const [sessions,    setSessions]    = useState<SessionResponse[]>([])
+  const [loading,     setLoading]     = useState(true)
+  const [error,       setError]       = useState('')
+  const [shareState,  setShareState]  = useState<Record<string, { sharing: boolean; copied: boolean; tok?: string }>>({})
+
+  async function handleShare(sessionId: string) {
+    if (!token) return
+    setShareState(prev => ({ ...prev, [sessionId]: { ...prev[sessionId], sharing: true, copied: false } }))
+    try {
+      let t = shareState[sessionId]?.tok
+      if (!t) {
+        const res = await shareSession(sessionId, token)
+        t = res.token
+        setShareState(prev => ({ ...prev, [sessionId]: { ...prev[sessionId], tok: t } }))
+      }
+      const url = `${window.location.origin}/shared/interview/${t}/attempt`
+      await navigator.clipboard.writeText(url)
+      setShareState(prev => ({ ...prev, [sessionId]: { ...prev[sessionId], copied: true } }))
+      setTimeout(() => setShareState(prev => ({ ...prev, [sessionId]: { ...prev[sessionId], copied: false } })), 2500)
+    } catch { /* ignore */ }
+    finally { setShareState(prev => ({ ...prev, [sessionId]: { ...prev[sessionId], sharing: false } })) }
+  }
 
   useEffect(() => {
     if (!token) return
@@ -100,6 +119,14 @@ export default function SessionsPage() {
                     Continue
                   </Link>
                 )}
+                <button
+                  className="btn btn-ghost btn-sm"
+                  onClick={() => handleShare(s.id)}
+                  disabled={shareState[s.id]?.sharing}
+                  title="Copy link to share these interview questions"
+                >
+                  {shareState[s.id]?.copied ? '✓ Copied!' : shareState[s.id]?.sharing ? '…' : '🔗 Share'}
+                </button>
               </div>
 
             </div>
