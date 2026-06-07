@@ -12,27 +12,27 @@ public sealed class ResumeAnalyser(ILLMService llm) : IResumeAnalyser
 
     public async Task<ResumeReviewResponse> ReviewAsync(string resumeText, CancellationToken ct = default)
     {
-        var prompt = $"""
+        var prompt = $$"""
             You are a professional resume coach and ATS expert. Analyse the following resume thoroughly.
 
             Return ONLY valid JSON — no markdown, no explanation:
-            {{
+            {
               "overallScore": <0-100>,
               "summary": "<2-3 sentence executive summary of the resume>",
-              "sections": {{
-                "summary":    {{ "score": <0-100>, "feedback": "<feedback>", "suggestions": ["<tip1>", "<tip2>"] }},
-                "experience": {{ "score": <0-100>, "feedback": "<feedback>", "suggestions": ["<tip1>", "<tip2>"] }},
-                "skills":     {{ "score": <0-100>, "feedback": "<feedback>", "suggestions": ["<tip1>", "<tip2>"] }},
-                "education":  {{ "score": <0-100>, "feedback": "<feedback>", "suggestions": ["<tip1>", "<tip2>"] }}
-              }},
+              "sections": {
+                "summary":    { "score": <0-100>, "feedback": "<feedback>", "suggestions": ["<tip1>", "<tip2>"] },
+                "experience": { "score": <0-100>, "feedback": "<feedback>", "suggestions": ["<tip1>", "<tip2>"] },
+                "skills":     { "score": <0-100>, "feedback": "<feedback>", "suggestions": ["<tip1>", "<tip2>"] },
+                "education":  { "score": <0-100>, "feedback": "<feedback>", "suggestions": ["<tip1>", "<tip2>"] }
+              },
               "topStrengths": ["<strength1>", "<strength2>", "<strength3>"],
               "criticalGaps": ["<gap1>", "<gap2>"],
               "atsScore": <0-100>,
               "atsTips": ["<tip1>", "<tip2>", "<tip3>"]
-            }}
+            }
 
             Resume:
-            {resumeText}
+            {{resumeText}}
             """;
 
         var raw  = await llm.CompleteAsync(prompt, ct);
@@ -60,11 +60,11 @@ public sealed class ResumeAnalyser(ILLMService llm) : IResumeAnalyser
 
     public async Task<JobMatchResponse> MatchJobAsync(string resumeText, string jobDescription, CancellationToken ct = default)
     {
-        var prompt = $"""
+        var prompt = $$"""
             You are an expert recruiter and ATS specialist. Compare the resume to the job description below.
 
             Return ONLY valid JSON — no markdown, no explanation:
-            {{
+            {
               "matchPercentage": <0-100>,
               "summary": "<2-3 sentence summary of the match>",
               "presentKeywords": ["<keyword1>", "<keyword2>"],
@@ -72,13 +72,13 @@ public sealed class ResumeAnalyser(ILLMService llm) : IResumeAnalyser
               "highlights": ["<highlight1>", "<highlight2>"],
               "gapAnalysis": ["<gap1>", "<gap2>"],
               "recommendations": ["<recommendation1>", "<recommendation2>"]
-            }}
+            }
 
             Resume:
-            {resumeText}
+            {{resumeText}}
 
             Job Description:
-            {jobDescription}
+            {{jobDescription}}
             """;
 
         var raw  = await llm.CompleteAsync(prompt, ct);
@@ -103,15 +103,15 @@ public sealed class ResumeAnalyser(ILLMService llm) : IResumeAnalyser
 
     public async Task<string> GenerateCoverLetterAsync(string resumeText, string jobDescription, CancellationToken ct = default)
     {
-        var prompt = $"""
+        var prompt = $$"""
             You are a professional career writer. Write a compelling, personalised cover letter based on the resume and job description provided.
             Return ONLY the cover letter text — no JSON, no markdown, no explanation. Start directly with the letter.
 
             Resume:
-            {resumeText}
+            {{resumeText}}
 
             Job Description:
-            {jobDescription}
+            {{jobDescription}}
             """;
 
         var raw = await llm.CompleteAsync(prompt, ct);

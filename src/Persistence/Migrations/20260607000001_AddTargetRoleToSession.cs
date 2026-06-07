@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace InterviewSimulator.Persistence.Migrations
 {
-    [Migration("20260607000001_AddTargetRoleToSession")]
+    /// <inheritdoc />
     public partial class AddTargetRoleToSession : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
