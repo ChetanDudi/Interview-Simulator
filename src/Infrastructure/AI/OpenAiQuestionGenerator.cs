@@ -21,10 +21,15 @@ public sealed class QuestionGenerator(ILLMService llm) : IQuestionGenerator
                 You are a senior software engineer conducting a coding interview. Based on the resume below, generate exactly {{count}} Data Structures & Algorithms / coding interview questions tailored to the candidate's tech stack and experience.
                 {{roleInstruction}}
 
-                Return ONLY a valid JSON array — no markdown, no explanation:
+                IMPORTANT JSON rules — the response will be parsed as JSON so:
+                - Do NOT use backslashes inside question text (no \n \t or similar — use plain spaces and line breaks instead)
+                - Do NOT wrap the output in markdown code fences
+                - All strings must use double quotes only
+
+                Return ONLY a valid JSON array with this exact shape:
                 [
                   {
-                    "question": "Full problem statement with examples and constraints...",
+                    "question": "Full problem statement. Example: Input [1,2,3] Output 6. Constraint: O(n) time.",
                     "type": "Coding",
                     "category": "Technical",
                     "difficulty": "Easy|Medium|Hard",
@@ -33,8 +38,8 @@ public sealed class QuestionGenerator(ILLMService llm) : IQuestionGenerator
                   }
                 ]
 
-                Include problems on: arrays, strings, recursion, trees, graphs, dynamic programming, sorting — matching the candidate's experience level.
-                Each question must be a complete DSA problem with context, input/output examples, and constraints.
+                Include problems on arrays, strings, recursion, trees, graphs, dynamic programming, sorting — matching the candidate's experience level.
+                Each question must be self-contained with context, sample inputs/outputs, and constraints — all written as plain text (no code blocks inside the JSON string).
 
                 Resume:
                 {{resumeText}}

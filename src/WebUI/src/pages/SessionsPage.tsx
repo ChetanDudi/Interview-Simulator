@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom'
 import NavBar from '../components/NavBar'
 import { useAuth } from '../context/AuthContext'
 import { getMySessions, shareSession } from '../api/sessions'
-import type { SessionResponse } from '../api/types'
+import { getMyBehavioralSessions } from '../api/behavioral'
+import type { SessionResponse, BehavioralSessionResponse } from '../api/types'
 
 function formatDate(iso: string) {
   return new Date(iso).toLocaleDateString('en-GB', {
@@ -25,12 +26,16 @@ function formatTimeTaken(seconds: number): string {
   return `${m}m${s > 0 ? ` ${s}s` : ''}`
 }
 
+type CombinedItem =
+  | { kind: 'interview'; data: SessionResponse;          date: Date }
+  | { kind: 'behavioral'; data: BehavioralSessionResponse; date: Date }
+
 export default function SessionsPage() {
   const { token } = useAuth()
-  const [sessions,    setSessions]    = useState<SessionResponse[]>([])
-  const [loading,     setLoading]     = useState(true)
-  const [error,       setError]       = useState('')
-  const [shareState,  setShareState]  = useState<Record<string, { sharing: boolean; copied: boolean; tok?: string }>>({})
+  const [items,       setItems]      = useState<CombinedItem[]>([])
+  const [loading,     setLoading]    = useState(true)
+  const [error,       setError]      = useState('')
+  const [shareState,  setShareState] = useState<Record<string, { sharing: boolean; copied: boolean; tok?: string }>>({})
 
   async function handleShare(sessionId: string) {
     if (!token) return
@@ -52,8 +57,16 @@ export default function SessionsPage() {
 
   useEffect(() => {
     if (!token) return
-    getMySessions(token)
-      .then(s => { setSessions(s); setLoading(false) })
+    Promise.all([getMySessions(token), getMyBehavioralSessions(token)])
+      .then(([sessions, behavioral]) => {
+        const combined: CombinedItem[] = [
+          ...sessions.map(s  => ({ kind: 'interview'  as const, data: s,  date: new Date(s.createdAtUtc) })),
+          ...behavioral.map(b => ({ kind: 'behavioral' as const, data: b,  date: new Date(b.createdAtUtc) })),
+        ]
+        combined.sort((a, b) => b.date.getTime() - a.date.getTime())
+        setItems(combined)
+        setLoading(false)
+      })
       .catch(() => { setError('Failed to load history.'); setLoading(false) })
   }, [token])
 
@@ -71,7 +84,7 @@ export default function SessionsPage() {
 
         {error && <p className="form-error">{error}</p>}
 
-        {sessions.length === 0 && !error && (
+        {items.length === 0 && !error && (
           <div className="sessions-empty">
             <p>No interviews yet.</p>
             <Link to="/resumes" className="btn btn-primary" style={{ marginTop: 16 }}>
@@ -81,64 +94,100 @@ export default function SessionsPage() {
         )}
 
         <div className="sessions-list">
-          {sessions.map(s => (
-            <div key={s.id} className="session-card">
+          {items.map(item => {
+            if (item.kind === 'behavioral') {
+              const b = item.data
+              return (
+                <div key={`b-${b.id}`} className="session-card">
+                  <div className="session-card-left">
+                    <span className="session-icon">🎤</span>
+                    <div>
+                      <p className="session-resume">{b.topic}</p>
+                      <span style={{
+                        display: 'inline-block', fontSize: '0.72rem', background: '#8b5cf622',
+                        color: '#a78bfa', borderRadius: 20, padding: '1px 10px', marginBottom: 4,
+                      }}>
+                        Behavioral / STAR
+                      </span>
+                      <p className="session-date">{formatDate(b.createdAtUtc)}</p>
+                      <p className="session-qcount">
+                        {b.questions.length} questions
+                        {b.timeTakenSeconds != null && (
+                          <span className="session-time"> · ⏱ {formatTimeTaken(b.timeTakenSeconds)}</span>
+                        )}
+                      </p>
+                    </div>
+                  </div>
 
-              <div className="session-card-left">
-                <span className="session-icon">🎯</span>
-                <div>
-                  <p className="session-resume">{s.resumeFileName}</p>
-                  {s.targetRole && (
-                    <span style={{
-                      display: 'inline-block', fontSize: '0.75rem', background: '#3b82f622',
-                      color: '#60a5fa', borderRadius: 20, padding: '1px 10px', marginBottom: 4
-                    }}>
-                      🎯 {s.targetRole}
-                    </span>
-                  )}
-                  <p className="session-date">{formatDate(s.createdAtUtc)}</p>
-                  <p className="session-qcount">
-                    {s.questions.length} questions
-                    {s.timeTakenSeconds != null && (
-                      <span className="session-time"> · ⏱ {formatTimeTaken(s.timeTakenSeconds)}</span>
+                  <div className="session-card-right">
+                    {b.status === 'Completed' ? (
+                      <Link to={`/behavioral/${b.id}/report`} className="btn btn-outline btn-sm">
+                        View Report
+                      </Link>
+                    ) : (
+                      <>
+                        <span className="session-status-badge session-status-badge--progress">In Progress</span>
+                        <Link to={`/behavioral/${b.id}`} className="btn btn-primary btn-sm">Continue</Link>
+                      </>
                     )}
-                  </p>
+                  </div>
+                </div>
+              )
+            }
+
+            // Regular interview session
+            const s = item.data
+            return (
+              <div key={`s-${s.id}`} className="session-card">
+                <div className="session-card-left">
+                  <span className="session-icon">🎯</span>
+                  <div>
+                    <p className="session-resume">{s.resumeFileName}</p>
+                    {s.targetRole && (
+                      <span style={{
+                        display: 'inline-block', fontSize: '0.75rem', background: '#3b82f622',
+                        color: '#60a5fa', borderRadius: 20, padding: '1px 10px', marginBottom: 4,
+                      }}>
+                        🎯 {s.targetRole}
+                      </span>
+                    )}
+                    <p className="session-date">{formatDate(s.createdAtUtc)}</p>
+                    <p className="session-qcount">
+                      {s.questions.length} questions
+                      {s.timeTakenSeconds != null && (
+                        <span className="session-time"> · ⏱ {formatTimeTaken(s.timeTakenSeconds)}</span>
+                      )}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="session-card-right">
+                  {s.status === 'Completed' && s.overallScore != null ? (
+                    <div className="session-score" style={{ color: scoreColor(s.overallScore) }}>
+                      <span className="session-score-num">{s.overallScore}</span>
+                      <span className="session-score-label">/100</span>
+                    </div>
+                  ) : (
+                    <span className="session-status-badge session-status-badge--progress">In Progress</span>
+                  )}
+
+                  {s.status === 'Completed' ? (
+                    <Link to={`/report/${s.id}`} className="btn btn-outline btn-sm">View Report</Link>
+                  ) : (
+                    <Link to={`/interview/${s.id}`} className="btn btn-primary btn-sm">Continue</Link>
+                  )}
+                  <button
+                    className="btn btn-ghost btn-sm"
+                    onClick={() => handleShare(s.id)}
+                    disabled={shareState[s.id]?.sharing}
+                    title="Copy link to share these interview questions"
+                  >
+                    {shareState[s.id]?.copied ? '✓ Copied!' : shareState[s.id]?.sharing ? '…' : '🔗 Share'}
+                  </button>
                 </div>
               </div>
-
-              <div className="session-card-right">
-                {s.status === 'Completed' && s.overallScore != null ? (
-                  <div className="session-score" style={{ color: scoreColor(s.overallScore) }}>
-                    <span className="session-score-num">{s.overallScore}</span>
-                    <span className="session-score-label">/100</span>
-                  </div>
-                ) : (
-                  <span className="session-status-badge session-status-badge--progress">
-                    In Progress
-                  </span>
-                )}
-
-                {s.status === 'Completed' ? (
-                  <Link to={`/report/${s.id}`} className="btn btn-outline btn-sm">
-                    View Report
-                  </Link>
-                ) : (
-                  <Link to={`/interview/${s.id}`} className="btn btn-primary btn-sm">
-                    Continue
-                  </Link>
-                )}
-                <button
-                  className="btn btn-ghost btn-sm"
-                  onClick={() => handleShare(s.id)}
-                  disabled={shareState[s.id]?.sharing}
-                  title="Copy link to share these interview questions"
-                >
-                  {shareState[s.id]?.copied ? '✓ Copied!' : shareState[s.id]?.sharing ? '…' : '🔗 Share'}
-                </button>
-              </div>
-
-            </div>
-          ))}
+            )
+          })}
         </div>
 
       </main>

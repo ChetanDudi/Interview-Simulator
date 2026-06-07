@@ -48,7 +48,18 @@ internal static class JsonSanitizer
         {
             if (escaped)
             {
-                sb.Append(c);
+                // Only these chars are valid after \ in JSON strings.
+                // If the AI emits an invalid sequence like `\ `, emit `\\`
+                // followed by the char so the string is well-formed.
+                if (c is '"' or '\\' or '/' or 'b' or 'f' or 'n' or 'r' or 't' or 'u')
+                {
+                    sb.Append(c);
+                }
+                else
+                {
+                    sb.Append('\\');  // escape the previous backslash
+                    sb.Append(c);
+                }
                 escaped = false;
                 continue;
             }
