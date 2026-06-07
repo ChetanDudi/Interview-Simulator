@@ -1,4 +1,4 @@
-import type { ResumeResponse } from './types'
+import type { ResumeResponse, ResumeReviewResponse, JobMatchResponse } from './types'
 
 import { apiBase } from './config'
 
@@ -38,4 +38,31 @@ export async function deleteResume(id: string, token: string): Promise<void> {
     headers: { Authorization: `Bearer ${token}` },
   })
   await handleResponse<void>(res)
+}
+
+export async function reviewResume(id: string, token: string): Promise<ResumeReviewResponse> {
+  const res = await fetch(`${BASE}/${id}/review`, {
+    method: 'POST',
+    headers: { Authorization: `Bearer ${token}` },
+  })
+  return handleResponse<ResumeReviewResponse>(res)
+}
+
+export async function matchJob(id: string, jobDescription: string, token: string): Promise<JobMatchResponse> {
+  const res = await fetch(`${BASE}/${id}/job-match`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+    body: JSON.stringify({ jobDescription }),
+  })
+  return handleResponse<JobMatchResponse>(res)
+}
+
+export async function generateCoverLetter(id: string, jobDescription: string, token: string): Promise<string> {
+  const res = await fetch(`${BASE}/${id}/cover-letter`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+    body: JSON.stringify({ jobDescription }),
+  })
+  const data = await handleResponse<{ coverLetter: string }>(res)
+  return data.coverLetter
 }

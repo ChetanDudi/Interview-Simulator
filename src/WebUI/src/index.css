@@ -41,6 +41,17 @@ a:hover { text-decoration: underline; }
   border-radius: 50%;
   animation: spin 0.7s linear infinite;
 }
+.spinner-sm {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border: 2px solid var(--border);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  vertical-align: middle;
+  margin-right: 6px;
+}
 @keyframes spin { to { transform: rotate(360deg); } }
 
 /* ── Buttons ────────────────────────────────────────────── */
@@ -447,6 +458,7 @@ a:hover { text-decoration: underline; }
 .resume-item {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 14px;
   background: var(--bg-card);
   border: 1px solid var(--border);
@@ -457,6 +469,15 @@ a:hover { text-decoration: underline; }
 .resume-info  { flex: 1; min-width: 0; }
 .resume-name  { font-size: 0.9rem; font-weight: 600; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .resume-meta  { font-size: 0.78rem; color: var(--text-muted); margin-top: 2px; }
+.resume-stats { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 5px; }
+.resume-stat-pill {
+  font-size: 0.72rem;
+  background: #1e2a45;
+  color: var(--text-secondary);
+  border-radius: 20px;
+  padding: 2px 9px;
+  font-weight: 500;
+}
 .resume-badge {
   font-size: 0.72rem;
   font-weight: 600;

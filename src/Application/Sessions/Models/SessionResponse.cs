@@ -10,4 +10,5 @@ public sealed class SessionResponse
     public int?                           OverallScore     { get; init; }
     public int?                           TimeTakenSeconds { get; init; }
     public IReadOnlyList<QuestionResponse> Questions       { get; init; } = [];
+    public string?                         TargetRole      { get; init; }
 }

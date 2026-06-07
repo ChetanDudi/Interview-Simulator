@@ -17,7 +17,7 @@ public sealed class SessionsController(ISessionService sessionService) : Control
         var userId = GetUserId();
         if (userId is null) return Unauthorized();
 
-        var result = await sessionService.CreateAsync(userId.Value, body.ResumeId, body.QuestionCount, cancellationToken);
+        var result = await sessionService.CreateAsync(userId.Value, body.ResumeId, body.QuestionCount, body.TargetRole, cancellationToken);
         if (!result.Succeeded)
             return BadRequest(new { errors = result.Errors });
 
@@ -97,8 +97,9 @@ public sealed class SessionsController(ISessionService sessionService) : Control
 
 public sealed class CreateSessionRequest
 {
-    public Guid ResumeId      { get; init; }
-    public int  QuestionCount { get; init; } = 8;
+    public Guid    ResumeId      { get; init; }
+    public int     QuestionCount { get; init; } = 8;
+    public string? TargetRole    { get; init; }
 }
 
 public sealed class SubmitAnswersRequest

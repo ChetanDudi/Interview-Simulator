@@ -34,6 +34,7 @@ public static class DependencyInjection
         services.AddScoped<IQuestionGenerator, QuestionGenerator>();
         services.AddScoped<IAnswerEvaluator,   AnswerEvaluator>();
         services.AddScoped<IPracticeService,   PracticeService>();
+        services.AddScoped<IResumeAnalyser,    ResumeAnalyser>();
 
         // ── Email sender ─────────────────────────────────────────────────────
         services.AddScoped<IEmailSender>(sp =>

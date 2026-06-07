@@ -88,6 +88,14 @@ export default function SessionsPage() {
                 <span className="session-icon">🎯</span>
                 <div>
                   <p className="session-resume">{s.resumeFileName}</p>
+                  {s.targetRole && (
+                    <span style={{
+                      display: 'inline-block', fontSize: '0.75rem', background: '#3b82f622',
+                      color: '#60a5fa', borderRadius: 20, padding: '1px 10px', marginBottom: 4
+                    }}>
+                      🎯 {s.targetRole}
+                    </span>
+                  )}
                   <p className="session-date">{formatDate(s.createdAtUtc)}</p>
                   <p className="session-qcount">
                     {s.questions.length} questions

@@ -16,7 +16,7 @@ public sealed class SessionService(
 {
     // ── Create Session ────────────────────────────────────────────────────────
 
-    public async Task<CreateSessionResult> CreateAsync(Guid userId, Guid resumeId, int questionCount = 8, CancellationToken cancellationToken = default)
+    public async Task<CreateSessionResult> CreateAsync(Guid userId, Guid resumeId, int questionCount = 8, string? targetRole = null, CancellationToken cancellationToken = default)
     {
         var resume = await dbContext.Resumes
             .FirstOrDefaultAsync(r => r.Id == resumeId && r.UserId == userId, cancellationToken);
@@ -31,7 +31,7 @@ public sealed class SessionService(
         try
         {
             var clampedCount = Math.Clamp(questionCount, 3, 20);
-            generated = await questionGenerator.GenerateAsync(resume.ExtractedText, clampedCount, cancellationToken);
+            generated = await questionGenerator.GenerateAsync(resume.ExtractedText, clampedCount, targetRole, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -47,7 +47,8 @@ public sealed class SessionService(
             UserId       = userId,
             ResumeId     = resumeId,
             Status       = "InProgress",
-            CreatedAtUtc = DateTime.UtcNow
+            CreatedAtUtc = DateTime.UtcNow,
+            TargetRole   = targetRole
         };
 
         var questions = generated
@@ -332,6 +333,7 @@ public sealed class SessionService(
         CreatedAtUtc     = s.CreatedAtUtc,
         OverallScore     = s.FeedbackReport?.OverallScore,
         TimeTakenSeconds = s.TimeTakenSeconds,
+        TargetRole       = s.TargetRole,
         Questions      = s.Questions
             .OrderBy(q => q.OrderIndex)
             .Select(q => new QuestionResponse

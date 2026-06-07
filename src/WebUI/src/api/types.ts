@@ -41,6 +41,39 @@ export interface ResumeResponse {
   fileSizeBytes: number
   uploadedAtUtc: string
   status: string
+  interviewCount: number
+  averageScore?: number
+  bestScore?: number
+  lastInterviewDate?: string
+}
+
+export interface ReviewSection {
+  score: number
+  feedback: string
+  suggestions: string[]
+}
+
+export interface ResumeReviewResponse {
+  overallScore: number
+  summary: string
+  summarySection: ReviewSection
+  experienceSection: ReviewSection
+  skillsSection: ReviewSection
+  educationSection: ReviewSection
+  topStrengths: string[]
+  criticalGaps: string[]
+  atsScore: number
+  atsTips: string[]
+}
+
+export interface JobMatchResponse {
+  matchPercentage: number
+  summary: string
+  presentKeywords: string[]
+  missingKeywords: string[]
+  highlights: string[]
+  gapAnalysis: string[]
+  recommendations: string[]
 }
 
 export interface QuestionResponse {
@@ -62,6 +95,7 @@ export interface SessionResponse {
   createdAtUtc: string
   overallScore?: number
   timeTakenSeconds?: number
+  targetRole?: string
   questions: QuestionResponse[]
 }
 

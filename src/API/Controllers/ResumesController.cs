@@ -48,9 +48,68 @@ public sealed class ResumesController(IResumeService resumeService) : Controller
         return NoContent();
     }
 
+    [HttpPost("{id:guid}/review")]
+    public async Task<IActionResult> Review(Guid id, CancellationToken cancellationToken)
+    {
+        var userId = GetUserId();
+        if (userId is null) return Unauthorized();
+
+        try
+        {
+            var result = await resumeService.ReviewAsync(userId.Value, id, cancellationToken);
+            if (result is null) return NotFound();
+            return Ok(result);
+        }
+        catch (InvalidOperationException ex)
+        {
+            return BadRequest(new { error = ex.Message });
+        }
+    }
+
+    [HttpPost("{id:guid}/job-match")]
+    public async Task<IActionResult> JobMatch(Guid id, [FromBody] JobMatchRequest body, CancellationToken cancellationToken)
+    {
+        var userId = GetUserId();
+        if (userId is null) return Unauthorized();
+
+        try
+        {
+            var result = await resumeService.MatchJobAsync(userId.Value, id, body.JobDescription, cancellationToken);
+            if (result is null) return NotFound();
+            return Ok(result);
+        }
+        catch (InvalidOperationException ex)
+        {
+            return BadRequest(new { error = ex.Message });
+        }
+    }
+
+    [HttpPost("{id:guid}/cover-letter")]
+    public async Task<IActionResult> CoverLetter(Guid id, [FromBody] JobMatchRequest body, CancellationToken cancellationToken)
+    {
+        var userId = GetUserId();
+        if (userId is null) return Unauthorized();
+
+        try
+        {
+            var result = await resumeService.GenerateCoverLetterAsync(userId.Value, id, body.JobDescription, cancellationToken);
+            if (result is null) return NotFound();
+            return Ok(new { coverLetter = result });
+        }
+        catch (InvalidOperationException ex)
+        {
+            return BadRequest(new { error = ex.Message });
+        }
+    }
+
     private Guid? GetUserId()
     {
         var raw = User.FindFirstValue(ClaimTypes.NameIdentifier);
         return Guid.TryParse(raw, out var id) ? id : null;
     }
+}
+
+public sealed class JobMatchRequest
+{
+    public string JobDescription { get; init; } = string.Empty;
 }

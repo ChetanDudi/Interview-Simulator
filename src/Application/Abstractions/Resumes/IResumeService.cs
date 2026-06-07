@@ -5,7 +5,11 @@ namespace InterviewSimulator.Application.Abstractions.Resumes;
 
 public interface IResumeService
 {
-    Task<UploadResumeResult>            UploadAsync(Guid userId, string originalFileName, Stream fileStream, long fileSizeBytes, CancellationToken cancellationToken = default);
+    Task<UploadResumeResult>                  UploadAsync(Guid userId, string originalFileName, Stream fileStream, long fileSizeBytes, CancellationToken cancellationToken = default);
     Task<IReadOnlyCollection<ResumeResponse>> GetByUserAsync(Guid userId, CancellationToken cancellationToken = default);
-    Task<ServiceResult>                 DeleteAsync(Guid userId, Guid resumeId, CancellationToken cancellationToken = default);
+    Task<ServiceResult>                       DeleteAsync(Guid userId, Guid resumeId, CancellationToken cancellationToken = default);
+
+    Task<ResumeReviewResponse?> ReviewAsync(Guid userId, Guid resumeId, CancellationToken ct = default);
+    Task<JobMatchResponse?>     MatchJobAsync(Guid userId, Guid resumeId, string jobDescription, CancellationToken ct = default);
+    Task<string?>               GenerateCoverLetterAsync(Guid userId, Guid resumeId, string jobDescription, CancellationToken ct = default);
 }

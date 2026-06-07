@@ -80,6 +80,7 @@ public sealed class InterviewSimulatorDbContext
             e.ToTable("InterviewSessions");
             e.HasKey(s => s.Id);
             e.Property(s => s.Status).HasMaxLength(50).IsRequired();
+            e.Property(s => s.TargetRole).HasMaxLength(200);
             e.HasOne<AppUser>().WithMany().HasForeignKey(s => s.UserId).OnDelete(DeleteBehavior.Cascade);
             e.HasOne<AppResume>().WithMany().HasForeignKey(s => s.ResumeId).OnDelete(DeleteBehavior.Cascade);
             e.HasMany(s => s.Questions).WithOne().HasForeignKey(q => q.SessionId).OnDelete(DeleteBehavior.Cascade);

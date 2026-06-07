@@ -17,6 +17,9 @@ import PracticeViewPage    from './pages/PracticeViewPage'
 import SharedPracticePage        from './pages/SharedPracticePage'
 import SharedInterviewPage       from './pages/SharedInterviewPage'
 import SharedInterviewAttemptPage from './pages/SharedInterviewAttemptPage'
+import ResumeReviewPage   from './pages/ResumeReviewPage'
+import JobMatchPage       from './pages/JobMatchPage'
+import CoverLetterPage    from './pages/CoverLetterPage'
 import ProtectedRoute      from './components/ProtectedRoute'
 
 function RootRedirect() {
@@ -37,7 +40,10 @@ export default function App() {
         <Route path="/verify-reset-otp" element={<VerifyResetOtpPage />} />
         <Route path="/reset-password"   element={<ResetPasswordPage />} />
         <Route path="/home"             element={<ProtectedRoute><HomePage /></ProtectedRoute>} />
-        <Route path="/resumes"          element={<ProtectedRoute><ResumePage /></ProtectedRoute>} />
+        <Route path="/resumes"                      element={<ProtectedRoute><ResumePage /></ProtectedRoute>} />
+        <Route path="/resumes/:id/review"           element={<ProtectedRoute><ResumeReviewPage /></ProtectedRoute>} />
+        <Route path="/resumes/:id/job-match"        element={<ProtectedRoute><JobMatchPage /></ProtectedRoute>} />
+        <Route path="/resumes/:id/cover-letter"     element={<ProtectedRoute><CoverLetterPage /></ProtectedRoute>} />
         <Route path="/interview/:id"       element={<ProtectedRoute><InterviewPage /></ProtectedRoute>} />
         <Route path="/voice-interview/:id" element={<ProtectedRoute><VoiceInterviewPage /></ProtectedRoute>} />
         <Route path="/report/:id"       element={<ProtectedRoute><ReportPage /></ProtectedRoute>} />

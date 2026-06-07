@@ -7,4 +7,10 @@ public sealed class ResumeResponse
     public long     FileSizeBytes    { get; init; }
     public DateTime UploadedAtUtc    { get; init; }
     public string   Status           { get; init; } = string.Empty;
+
+    // ── Interview stats ───────────────────────────────────────────────────────
+    public int       InterviewCount    { get; init; }
+    public double?   AverageScore      { get; init; }
+    public int?      BestScore         { get; init; }
+    public DateTime? LastInterviewDate { get; init; }
 }

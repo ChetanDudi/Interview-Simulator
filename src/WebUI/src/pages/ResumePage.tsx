@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type DragEvent, type ChangeEvent } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import NavBar from '../components/NavBar'
 import { useAuth } from '../context/AuthContext'
 import { uploadResume, getMyResumes, deleteResume } from '../api/resumes'
@@ -32,6 +32,7 @@ export default function ResumePage() {
   const [interviewMode,  setInterviewMode]  = useState<'text' | 'voice'>('text')
   const [questionCount,  setQuestionCount]  = useState(8)
   const [customCount,    setCustomCount]    = useState('')
+  const [targetRole,     setTargetRole]     = useState('')
   const [starting,       setStarting]       = useState(false)
 
   useEffect(() => {
@@ -62,6 +63,7 @@ export default function ResumePage() {
     setInterviewMode(mode)
     setQuestionCount(8)
     setCustomCount('')
+    setTargetRole('')
     setError('')
   }
   function closePicker() { setPickerResumeId(null) }
@@ -73,7 +75,7 @@ export default function ResumePage() {
     setError('')
     setStarting(true)
     try {
-      const session = await createSession(pickerResumeId, count, token)
+      const session = await createSession(pickerResumeId, count, token, targetRole.trim() || undefined)
       navigate(interviewMode === 'voice' ? `/voice-interview/${session.id}` : `/interview/${session.id}`)
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to start interview.')
@@ -129,29 +131,51 @@ export default function ResumePage() {
                 <div className="resume-info">
                   <div className="resume-name">{r.originalFileName}</div>
                   <div className="resume-meta">{formatBytes(r.fileSizeBytes)} · {formatDate(r.uploadedAtUtc)}</div>
+                  {r.interviewCount > 0 && (
+                    <div className="resume-stats">
+                      <span className="resume-stat-pill">📊 {r.interviewCount} interview{r.interviewCount !== 1 ? 's' : ''}</span>
+                      {r.averageScore != null && (
+                        <span className="resume-stat-pill" style={{ color: r.averageScore >= 70 ? '#10b981' : r.averageScore >= 50 ? '#f59e0b' : '#ef4444' }}>
+                          Avg {Math.round(r.averageScore)}/100
+                        </span>
+                      )}
+                      {r.bestScore != null && (
+                        <span className="resume-stat-pill">Best {r.bestScore}/100</span>
+                      )}
+                    </div>
+                  )}
                 </div>
                 <span className={`resume-badge${r.status === 'Ready' ? ' badge--ready' : r.status === 'TextExtractionFailed' ? ' badge--warn' : ''}`}>
                   {r.status === 'Ready' ? '✓ Ready' : r.status === 'TextExtractionFailed' ? '⚠ No text' : r.status}
                 </span>
-                <button
-                  className="btn btn-primary btn-sm"
-                  disabled={r.status !== 'Ready'}
-                  onClick={() => openPicker(r.id, 'text')}
-                  title={r.status !== 'Ready' ? 'Text extraction failed — cannot generate questions' : 'Type or speak your answers'}
-                >
-                  📝 Text
-                </button>
-                <button
-                  className="btn btn-voice btn-sm"
-                  disabled={r.status !== 'Ready'}
-                  onClick={() => openPicker(r.id, 'voice')}
-                  title={r.status !== 'Ready' ? 'Text extraction failed — cannot generate questions' : 'Voice-only interview — AI reads questions aloud'}
-                >
-                  🎙 Voice
-                </button>
-                <button className="btn btn-danger btn-sm" onClick={() => handleDelete(r.id)} disabled={deletingId === r.id}>
-                  {deletingId === r.id ? '…' : 'Delete'}
-                </button>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, alignItems: 'center' }}>
+                  <button
+                    className="btn btn-primary btn-sm"
+                    disabled={r.status !== 'Ready'}
+                    onClick={() => openPicker(r.id, 'text')}
+                    title={r.status !== 'Ready' ? 'Text extraction failed — cannot generate questions' : 'Type or speak your answers'}
+                  >
+                    📝 Text
+                  </button>
+                  <button
+                    className="btn btn-voice btn-sm"
+                    disabled={r.status !== 'Ready'}
+                    onClick={() => openPicker(r.id, 'voice')}
+                    title={r.status !== 'Ready' ? 'Text extraction failed — cannot generate questions' : 'Voice-only interview — AI reads questions aloud'}
+                  >
+                    🎙 Voice
+                  </button>
+                  {r.status === 'Ready' && (
+                    <>
+                      <Link to={`/resumes/${r.id}/review`}       className="btn btn-outline btn-sm" title="AI Resume Review">📋 Review</Link>
+                      <Link to={`/resumes/${r.id}/job-match`}    className="btn btn-outline btn-sm" title="Match a Job Description">🎯 Job Match</Link>
+                      <Link to={`/resumes/${r.id}/cover-letter`} className="btn btn-outline btn-sm" title="Generate Cover Letter">✉ Cover Letter</Link>
+                    </>
+                  )}
+                  <button className="btn btn-danger btn-sm" onClick={() => handleDelete(r.id)} disabled={deletingId === r.id}>
+                    {deletingId === r.id ? '…' : 'Delete'}
+                  </button>
+                </div>
               </div>
             ))}
           </div>
@@ -196,6 +220,19 @@ export default function ResumePage() {
                 onChange={e => setCustomCount(e.target.value)}
                 className="q-count-input"
               />
+            </div>
+
+            <div className="q-count-custom" style={{ marginTop: 16 }}>
+              <label className="q-count-custom-label">Target Role <span style={{ fontWeight: 400, color: 'var(--text-muted)' }}>(optional)</span></label>
+              <input
+                type="text"
+                placeholder="e.g. Senior Frontend Engineer"
+                value={targetRole}
+                onChange={e => setTargetRole(e.target.value)}
+                className="q-count-input"
+                style={{ width: '100%', marginTop: 6 }}
+              />
+              <p style={{ color: 'var(--text-muted)', fontSize: '0.78rem', marginTop: 4 }}>AI will tailor questions for this specific role.</p>
             </div>
 
             {error && <p className="form-error" style={{ marginBottom: 12 }}>{error}</p>}

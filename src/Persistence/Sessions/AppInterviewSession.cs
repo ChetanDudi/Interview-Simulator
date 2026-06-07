@@ -12,6 +12,7 @@ public sealed class AppInterviewSession
 
     public int?      TimeTakenSeconds { get; set; }
     public string?   ShareToken       { get; set; }
+    public string?   TargetRole       { get; set; }
 
     public List<AppInterviewQuestion> Questions      { get; set; } = [];
     public AppFeedbackReport?         FeedbackReport { get; set; }

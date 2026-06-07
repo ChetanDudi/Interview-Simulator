@@ -7,10 +7,15 @@ public sealed class QuestionGenerator(ILLMService llm) : IQuestionGenerator
 {
     private static readonly JsonSerializerOptions JsonOpts = new() { PropertyNameCaseInsensitive = true };
 
-    public async Task<IReadOnlyList<GeneratedQuestion>> GenerateAsync(string resumeText, int count = 8, CancellationToken cancellationToken = default)
+    public async Task<IReadOnlyList<GeneratedQuestion>> GenerateAsync(string resumeText, int count = 8, string? targetRole = null, CancellationToken cancellationToken = default)
     {
+        var roleInstruction = targetRole is not null
+            ? $"Focus the questions specifically for the role: {targetRole}."
+            : string.Empty;
+
         var prompt = $$"""
             You are an expert technical interviewer. Analyse the following resume and generate exactly {{count}} interview questions.
+            {{roleInstruction}}
             Use a MIX of question types suited to the candidate's skills:
             - MCQ: Multiple choice with exactly 4 options (theory / concept checks).
             - ShortAnswer: 1-2 sentence factual answer.
